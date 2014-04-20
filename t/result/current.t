@@ -2,7 +2,7 @@ use Test::More;
 use strict; use warnings FATAL => 'all';
 
 use lib 't/inc';
-use OWMTestUtil;
+use Weather::OpenWeatherMap::Test;
 
 use Weather::OpenWeatherMap::Request;
 use Weather::OpenWeatherMap::Result;
