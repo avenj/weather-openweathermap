@@ -6,6 +6,9 @@ use Carp;
 use Types::Standard -all;
 
 use Moo; use MooX::late;
+
+with 'StackTrace::Auto';
+
 use overload
   bool => sub { 1 },
   '""' => sub { shift->as_string },
@@ -56,7 +59,9 @@ These objects contain information on internal or backend (API) errors; they
 are generally emitted to subscribed sessions by
 L<Weather::OpenWeatherMap> in response to a failed request.
 
-These objects stringify (via L</as_string>).
+These objects overload stringification (see L</as_string>).
+
+These objects consume L<StackTrace::Auto>.
 
 =head2 ATTRIBUTES
 
@@ -83,6 +88,10 @@ C<< (uc $err->source) $err->status >>
 =head1 SEE ALSO
 
 L<Weather::OpenWeatherMap>
+
+L<StackTrace::Auto>
+
+L<Devel::StackTrace>
 
 =head1 AUTHOR
 

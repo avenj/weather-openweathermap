@@ -8,6 +8,11 @@ use LWP::UserAgent;
 use Types::Standard -all;
 
 
+use Weather::OpenWeatherMap::Error;
+use Weather::OpenWeatherMap::Request;
+use Weather::OpenWeatherMap::Result;
+
+
 use Moo; use MooX::late;
 
 has api_key => (
@@ -44,8 +49,9 @@ sub get_weather {
 
   unless ($http_response->is_success) {
     die Weather::OpenWeatherMap::Error->new(
-      # FIXME
-      # FIXME these objs need a stacktrace
+      request => $my_request,
+      source  => 'http',
+      status  => $http_response->status_line,
     );
   }
 
@@ -56,12 +62,12 @@ sub get_weather {
   );
 
   unless ($result->is_success) {
-    # FIXME die with Error obj for $result->error
+    die Weather::OpenWeatherMap::Error->new(
+      request => $my_request,
+      source  => 'api',
+      status  => $result->error,
+    )
   }
-
-  ## FIXME die with err obj like http exceptions above
-  ##       unless $result->is_success
-  ##       (see lwp example in old POEx dist)
 
   $result
 }

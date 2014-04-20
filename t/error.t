@@ -22,4 +22,6 @@ ok $err->request == $req, 'request ok';
 
 cmp_ok $err, 'eq', '(HTTP) died, zomg!', 'stringify ok';
 
+ok $err->does('StackTrace::Auto'), 'does StackTrace::Auto ok';
+
 done_testing
