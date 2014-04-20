@@ -25,6 +25,7 @@ has source => (
   is        => 'ro',
   isa       => sub {
     $_[0] eq 'api' || $_[0] eq 'internal' || $_[0] eq 'http'
+      or die "Expected one of: api, internal, http"
   },
 );
 

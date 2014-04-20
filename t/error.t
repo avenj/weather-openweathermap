@@ -24,4 +24,22 @@ cmp_ok $err, 'eq', '(HTTP) died, zomg!', 'stringify ok';
 
 ok $err->does('StackTrace::Auto'), 'does StackTrace::Auto ok';
 
+eval {;
+  Weather::OpenWeatherMap::Error->new(
+    request => $req,
+    source  => 'invalid',
+    status  => 'fubar',
+  )
+};
+like $@, qr/source/, 'invalid source dies ok';
+
+eval {;
+  Weather::OpenWeatherMap::Error->new(
+    source => 'api',
+    status => 'fubar',
+  )
+};
+
+like $@, qr/request/, 'invalid request dies ok';
+
 done_testing
