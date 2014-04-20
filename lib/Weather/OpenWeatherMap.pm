@@ -33,7 +33,7 @@ has ua => (
 sub get_weather {
   my ($self, %args) = @_;
 
-  my $location = delete $args{location};
+  my $location = $args{location};
   croak "Missing 'location =>' in query" unless $location;
 
   my $type = delete $args{forecast} ? 'Forecast' : 'Current';
@@ -98,7 +98,13 @@ FIXME
 
 =head3 ua
 
-FIXME
+The L<LWP::UserAgent> instance used to issue HTTP requests; an instance can be
+passed in in order to control LWP options:
+
+  my $wx = Weather::OpenWeatherMap->new(
+    api_key => $my_api_key,
+    ua => LWP::UserAgent->new(%lwp_opts),  
+  );
 
 =head2 METHODS
 

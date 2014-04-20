@@ -8,6 +8,7 @@ use JSON::Tiny;
 use parent 'Exporter::Tiny';
 our @EXPORT = our @EXPORT_OK = qw/
   get_test_data
+  mock_http_ua
 /;
 
 our $JSON_Current;
@@ -35,6 +36,30 @@ sub get_test_data {
   }
 
   confess "Unknown type $type"
+}
+
+{ package
+    Weather::OpenWeatherMap::Test::MockUA;
+  use strict; use warnings FATAL => 'all';
+  our @ISA = 'LWP::UserAgent';
+  sub request {
+    my ($self, $http_request) = @_;
+    my $url = $http_request->uri;
+    return $url =~ /forecast/ ?
+      HTTP::Response->new(
+        200 => undef => [] => $self->{forecast_json},
+      )
+      : HTTP::Response->new(
+        200 => undef => [] => $self->{current_json},   # FIXME
+      )
+  }
+}
+
+sub mock_http_ua {
+  return bless +{
+    forecast_json => get_test_data('forecast'),
+    current_json  => get_test_data('current'),
+  }, 'Weather::OpenWeatherMap::Test::MockUA'
 }
 
 
