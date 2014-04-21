@@ -47,7 +47,8 @@ sub get_test_data {
 { package
     Weather::OpenWeatherMap::Test::MockUA;
   use strict; use warnings FATAL => 'all';
-  our @ISA = 'LWP::UserAgent';
+  require HTTP::Response;
+  use parent 'LWP::UserAgent';
   sub request {
     my ($self, $http_request) = @_;
     my $url = $http_request->uri;
