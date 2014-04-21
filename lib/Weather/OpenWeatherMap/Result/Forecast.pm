@@ -9,6 +9,11 @@ use List::Objects::Types -all;
 
 use Weather::OpenWeatherMap::Result::Forecast::Day;
 
+=pod
+
+=for Pod::Coverage lazy_for
+
+=cut
 
 sub lazy_for {
   my $type = shift;

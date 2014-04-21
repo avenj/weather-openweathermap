@@ -14,6 +14,12 @@ use Weather::OpenWeatherMap::Units qw/
 /;
 
 
+=pod
+
+=for Pod::Coverage lazy_for
+
+=cut
+
 sub lazy_for {
   my $type = shift;
   ( 

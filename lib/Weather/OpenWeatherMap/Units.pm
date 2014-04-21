@@ -25,4 +25,10 @@ sub deg_to_compass {
   $compass->[ $val % 16 ]
 }
 
+=pod
+
+=for Pod::Coverage .*
+
+=cut
+
 1;

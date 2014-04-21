@@ -5,6 +5,7 @@ use Weather::OpenWeatherMap;
 use Weather::OpenWeatherMap::Test;
 
 my $wx = Weather::OpenWeatherMap->new(
+  api_key => 'foo',
   ua => mock_http_ua,
 );
 

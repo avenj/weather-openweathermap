@@ -23,6 +23,11 @@ sub new_for {
   use_module($subclass)->new(@_)
 }
 
+=pod
+
+=for Pod::Coverage has_\w+
+
+=cut
 
 has api_key => (
   lazy      => 1,

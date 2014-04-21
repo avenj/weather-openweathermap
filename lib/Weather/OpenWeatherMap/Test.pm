@@ -1,5 +1,11 @@
 package Weather::OpenWeatherMap::Test;
 
+=pod
+
+=for Pod::Coverage .*
+
+=cut
+
 use v5.10;
 use strictures 1;
 use Carp;
@@ -50,7 +56,7 @@ sub get_test_data {
         200 => undef => [] => $self->{forecast_json},
       )
       : HTTP::Response->new(
-        200 => undef => [] => $self->{current_json},   # FIXME
+        200 => undef => [] => $self->{current_json},
       )
   }
 }

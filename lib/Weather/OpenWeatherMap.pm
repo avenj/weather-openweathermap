@@ -15,6 +15,12 @@ use Weather::OpenWeatherMap::Result;
 
 use Moo; use MooX::late;
 
+=pod
+
+=for Pod::Coverage api_key
+
+=cut
+
 has api_key => (
   lazy      => 1,
   is        => 'ro',
@@ -26,7 +32,7 @@ has api_key => (
 has ua => (
   is        => 'ro',
   isa       => InstanceOf['LWP::UserAgent'],
-  builder   => sub { LWP::UserAgent->new },
+  builder   => sub { LWP::UserAgent->new(timeout => 60) },
 );
 
 
@@ -84,22 +90,60 @@ Weather::OpenWeatherMap - Interface to the OpenWeatherMap API
 
 =head1 SYNOPSIS
 
-FIXME
+  use Weather::OpenWeatherMap;
+
+  my $api_key = 'foo';
+
+  my $wx = Weather::OpenWeatherMap->new(
+    api_key => $my_api_key,
+  );
+
+  # Current conditions:
+  my $current = $wx->get_weather(
+    location => 'Manchester, NH',
+  );
+  my $tempf = $current->temp_f;
+  my $wind  = $current->wind_speed_mph;
+  # (see Weather::OpenWeatherMap::Result::Current)
+
+  # Forecast conditions:
+  my $forecast = $wx->get_weather(
+    location => 'Manchester, NH',
+    forecast => 1,
+    days     => 3,
+  );
+  for my $day ($forecast->list) {
+    my $date    = $day->dt->mdy;
+    my $temp_lo = $day->temp_min_f,
+    my $temp_hi = $day->temp_max_f,
+    # (see Weather::OpenWeatherMap::Result::Forecast::Day)
+  }
+  # (see Weather::OpenWeatherMap::Result::Forecast)
 
 =head1 DESCRIPTION
 
-FIXME desc, links to OWM
+An object-oriented interface to retrieving weather conditions & forecasts from
+B<OpenWeatherMap> (L<http://www.openweathermap.org/>) for a given city,
+latitude/longitude, or OpenWeatherMap city code.
+
+This module provides a simple blocking (L<LWP::UserAgent>) interface to
+weather retrieval; if you have an event loop handy, the included
+L<Weather::OpenWeatherMap::Request> & L<Weather::OpenWeatherMap::Result>
+classes can be used to create appropriate L<HTTP::Request> instances and parse
+responses from non-blocking HTTP clients.
 
 =head2 ATTRIBUTES
 
 =head3 api_key
 
-FIXME
+Your L<OpenWeatherMap|http://www.openweathermap.org/> API key.
+
+(See L<http://www.openweathermap.org/api> to register for free.)
 
 =head3 ua
 
-The L<LWP::UserAgent> instance used to issue HTTP requests; an instance can be
-passed in in order to control LWP options:
+The L<LWP::UserAgent> instance used to issue HTTP requests; can be used to
+control LWP options:
 
   my $wx = Weather::OpenWeatherMap->new(
     api_key => $my_api_key,
