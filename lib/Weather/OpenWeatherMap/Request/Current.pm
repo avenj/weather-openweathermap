@@ -15,11 +15,12 @@ Weather::OpenWeatherMap::Request::Current
 
 =head1 SYNOPSIS
 
+  # Usually created by Weather::OpenWeatherMap
   use Weather::OpenWeatherMap::Request;
   my $current = Weather::OpenWeatherMap::Request->new_for(
     Current =>
       tag      => 'foo',
-      location =>
+      location => 'Manchester, NH',
   );
 
 =head1 DESCRIPTION
