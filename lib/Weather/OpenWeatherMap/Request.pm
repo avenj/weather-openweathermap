@@ -156,9 +156,9 @@ L<Weather::OpenWeatherMap>.
 
 See also:
 
-L<Weather::OpenWeatherMap::Current>
+L<Weather::OpenWeatherMap::Request::Current>
 
-L<Weather::OpenWeatherMap::Forecast>
+L<Weather::OpenWeatherMap::Request::Forecast>
 
 =head2 ATTRIBUTES
 

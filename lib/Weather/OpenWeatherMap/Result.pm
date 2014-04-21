@@ -89,12 +89,7 @@ Weather::OpenWeatherMap::Result - Weather lookup result superclass
 
 =head1 SYNOPSIS
 
-  # Normally retrieved via Weather::OpenWeatherMap;
-  # subscribed sessions receive a subclass of this class:
-  sub my_weather_event {
-    my $result = $_[ARG0];
-    # ...
-  }
+  # Normally retrieved via Weather::OpenWeatherMap
 
 =head1 DESCRIPTION
 

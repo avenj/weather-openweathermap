@@ -179,7 +179,7 @@ Weather::OpenWeatherMap::Result::Current - Weather conditions result
 =head1 DESCRIPTION
 
 This is a subclass of L<Weather::OpenWeatherMap::Result> containing the
-result of a completed L<Weather::OpenWeatherMap::Current>.
+result of a completed L<Weather::OpenWeatherMap::Request::Current>.
 
 These are normally emitted by a L<Weather::OpenWeatherMap> instance.
 

@@ -17,7 +17,7 @@ use Moo; use MooX::late;
 
 =pod
 
-=for Pod::Coverage api_key
+=for Pod::Coverage has_api_key
 
 =cut
 
@@ -95,7 +95,7 @@ Weather::OpenWeatherMap - Interface to the OpenWeatherMap API
   my $api_key = 'foo';
 
   my $wx = Weather::OpenWeatherMap->new(
-    api_key => $my_api_key,
+    api_key => $api_key,
   );
 
   # Current conditions:
