@@ -49,9 +49,12 @@ sub get_test_data {
   use strict; use warnings FATAL => 'all';
   require HTTP::Response;
   use parent 'LWP::UserAgent';
+  sub requested_count { my ($self) = @_; $self->{'__requested'} }
   sub request {
     my ($self, $http_request) = @_;
     my $url = $http_request->uri;
+    $self->{'__requested'} ? 
+      ++$self->{'__requested'} : ($self->{'__requested'} = 1);
     return $url =~ /forecast/ ?
       HTTP::Response->new(
         200 => undef => [] => $self->{forecast_json},
