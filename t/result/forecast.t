@@ -34,6 +34,8 @@ ok $res->longitude eq '-71.4631', 'longitude ok';
 
 ok $res->count == 3, 'count ok';
 
+ok $res->as_array->count == 3, 'as_array ok';
+
 my @list = $res->list;
 ok @list == 3, 'list has 3 elements';
 for my $day (@list) {
@@ -89,6 +91,9 @@ ok $second->conditions_verbose eq 'broken clouds', 'day 2 conditions_verbose ok'
 ok $second->conditions_code == 803, 'day 2 conditions_code ok';
 ok $second->conditions_icon eq '04d', 'day 2 conditions_icon ok';
 
+# FIXME test serialize/deserialize
+
+# FIXME test failure data ?
 
 
 done_testing
