@@ -10,6 +10,8 @@ use Weather::OpenWeatherMap::Units -all;
 
 use Moo; use MooX::late;
 
+use Storable 'freeze';
+
 my $CoercedInt = Int->plus_coercions(StrictNum, sub { int });
 
 has dt => (
@@ -54,7 +56,7 @@ has wind_speed_kph => (
   is        => 'ro',
   isa       => $CoercedInt,
   coerce    => 1,
-  builder   => sub { f_to_c shift->wind_speed_mph },
+  builder   => sub { mph_to_kph shift->wind_speed_mph },
 );
 
 has wind_direction => (
