@@ -68,6 +68,10 @@ sub as_array {
   $self->_forecast_list->copy
 }
 
+=for Pod::Coverage as_list
+
+=cut
+
 { no warnings 'once'; *as_list = *list }
 sub list {
   my ($self) = @_;
