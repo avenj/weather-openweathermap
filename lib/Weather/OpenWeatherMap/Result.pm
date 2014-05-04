@@ -12,6 +12,8 @@ use Types::Standard      -all;
 
 use Moo; use MooX::late;
 
+use Storable 'freeze';
+
 sub new_for {
   my ($class, $type) = splice @_, 0, 2;
   confess "Expected a subclass type" unless $type;
@@ -78,6 +80,7 @@ has error => (
     $msg
   },
 );
+
 
 1;
 

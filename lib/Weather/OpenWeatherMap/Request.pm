@@ -15,6 +15,7 @@ use Module::Runtime 'use_module';
 
 use Moo; use MooX::late;
 
+use Storable 'freeze';
 
 sub new_for {
   my ($class, $type) = splice @_, 0, 2;
@@ -86,6 +87,7 @@ has _units => (
   isa      => Str,
   builder  => sub { 'imperial' },
 );
+
 
 
 sub _url_bycode {
