@@ -10,7 +10,7 @@ use List::Objects::Types -all;
 use Types::Standard      -all;
 
 
-use Moo; use MooX::late;
+use namespace::clean; use Moo; use MooX::late;
 
 use Storable 'freeze';
 
