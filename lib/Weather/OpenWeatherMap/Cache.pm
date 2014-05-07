@@ -17,7 +17,7 @@ use List::Objects::Types  -all;
 use Types::Path::Tiny     -all;
 
 
-use Moo; use MooX::late;
+use namespace::clean; use Moo; use MooX::late;
 
 
 has dir => (
@@ -48,8 +48,14 @@ has max_entries => (
 
 sub make_path {
   my ($self, $obj) = @_;
+
+  $obj = $obj->request
+    if is_Object($obj)
+    and $obj->isa('Weather::OpenWeatherMap::Result');
+
   confess "Expected a Weather::OpenWeatherMap::Request but got $obj"
     unless is_Object($obj) and $obj->isa('Weather::OpenWeatherMap::Request');
+
   my $fname = 'W';
   TYPE: {
     if ($obj->isa('Weather::OpenWeatherMap::Request::Current')) {
@@ -78,12 +84,14 @@ sub serialize {
 }
 
 sub cache {
-  my ($self, $obj) = @_;
-  confess "Expected a Weather::OpenWeatherMap::Result but got $obj"
-    unless is_Object($obj) and $obj->isa('Weather::OpenWeatherMap::Result');
+  my ($self, $result) = @_;
+  confess "Expected a Weather::OpenWeatherMap::Result but got $result"
+    unless is_Object($result) 
+    and $result->isa('Weather::OpenWeatherMap::Result');
 
-  my $path   = $self->make_path($obj);
-  my $frozen = $self->serialize($obj);
+  my $request = $result->request;
+  my $path   = $self->make_path($request);
+  my $frozen = $self->serialize($result);
   $path->spew_raw($frozen)
 }
 
@@ -115,10 +123,20 @@ sub retrieve {
 
 sub expire {
   my ($self, $obj) = @_;
-  # FIXME act on either Request or Result objs?
-  # FIXME expire cached $obj if old
-  #  cannot use retrieve(), is_cached calls an expire()
-  # FIXME return true if we expired an object
+  my $path = $self->make_path($obj);
+  return unless $path->exists;
+
+  my $data = $path->slurp_raw;
+  my $ref = 
+    try { $self->deserialize($data) }
+    catch {
+      warn "Attempting to remove possibly corrupt cachefile: $path";
+      $path->remove
+    };
+
+  my ($ts, $result) = @$ref;
+  return $path->remove if time - $ts > $self->expiry;
+  ()
 }
 
 sub clear {
