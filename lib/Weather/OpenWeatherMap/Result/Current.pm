@@ -30,7 +30,7 @@ sub lazy_for {
 }
 
 
-use Moo; use MooX::late;
+use namespace::clean; use Moo; use MooX::late;
 extends 'Weather::OpenWeatherMap::Result';
 
 
