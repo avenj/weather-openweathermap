@@ -157,3 +157,102 @@ sub clear {
 
 
 1;
+
+=pod
+
+=head1 NAME
+
+Weather::OpenWeatherMap::Cache - Cache manager for OpenWeatherMap results
+
+=head1 SYNOPSIS
+
+  # Usually used via Weather::OpenWeatherMap
+
+=head1 DESCRIPTION
+
+A simple cache manager for L<Weather::OpenWeatherMap> results.
+
+=head2 ATTRIBUTES
+
+=head3 dir
+
+The directory cache files are saved in.
+
+Defaults to creating a subdirectory named C<owmcache> under L<Path::Tiny> /
+L<File::Temp> 's best guess at a tempdir.
+
+=head3 expiry
+
+=head2 METHODS
+
+=head3 High-level methods
+
+=head4 cache
+
+Takes a L<Weather::OpenWeatherMap::Result> and caches it to L</dir>.
+
+=head4 retrieve
+
+Takes a L<Weather::OpenWeatherMap::Request> and attempts to retrieve a
+(non-expired) cached result.
+
+Returns false if no item was found.
+
+If successful, the return value is a simple struct-like object with two
+attributes, B<cached_at> (the C<time()> that the cached item was saved) and
+B<object> (the relevant L<Weather::OpenWeatherMap::Result> object):
+
+  my $result;
+  if (my $cached = $cache->retrieve($request)) {
+    $result = $cached->object
+  }
+
+=head3 Low-level methods
+
+Subclasses can override the following methods to alter cache behavior.
+
+=head4 clear
+
+Walk our L</dir>, removing any items that appear to belong to the cache.
+
+=head4 deserialize
+
+Takes a scalar containing serialized cache data and returns a Perl object or
+data structure.
+
+Uses L<Storable> by default.
+
+=head4 expire
+
+Takes a L<Weather::OpenWeatherMap::Request> or
+L<Weather::OpenWeatherMap::Result> and removes stale cache data.
+
+Called by L</retrieve> before object retrieval.
+
+Returns true if a cached object was expired.
+
+=head4 is_cached
+
+Takes a L<Weather::OpenWeatherMap::Request> or
+L<Weather::OpenWeatherMap::Result> and returns boolean true if the object is
+cached.
+
+=head4 make_path
+
+Takes a L<Weather::OpenWeatherMap::Request> or
+L<Weather::OpenWeatherMap::Result> and returns an appropriate L<Path::Tiny>
+object representing the path that would be used to cache or retrieve the
+object.
+
+=head4 serialize
+
+Takes a Perl object or data structure and returns serialized cache data
+suitable for writing to disk.
+
+Uses L<Storable> by default.
+
+=head1 AUTHOR
+
+Jon Portnoy <avenj@cobaltirc.org>
+
+=cut
