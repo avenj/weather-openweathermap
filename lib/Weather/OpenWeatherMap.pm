@@ -126,7 +126,7 @@ sub get_weather {
     )
   }
 
-  $self->_cache->cache($result);
+  $self->_cache->cache($result) if $self->cache;
 
   $result
 }
