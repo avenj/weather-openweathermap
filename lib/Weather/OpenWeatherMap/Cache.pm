@@ -4,6 +4,7 @@ use Carp;
 use strictures 1;
 
 use Storable ();
+use Time::HiRes ();
 
 use Digest::SHA 'sha1_hex';
 
@@ -30,7 +31,7 @@ has dir => (
 
 has expiry => (
   is        => 'ro',
-  isa       => Int,
+  isa       => StrictNum,
   builder   => sub { 1200 },
 );
 
@@ -69,7 +70,7 @@ sub make_path {
 sub serialize {
   my ($self, $obj) = @_;
   Storable::freeze(
-    [ time(), $obj ]
+    [ Time::HiRes::time, $obj ]
   )
 }
 
@@ -125,7 +126,7 @@ sub expire {
     };
 
   my ($ts, $result) = @$ref;
-  return $path->remove if time - $ts > $self->expiry;
+  return $path->remove if Time::HiRes::time - $ts > $self->expiry;
   ()
 }
 

@@ -174,14 +174,12 @@ ok !$cache->retrieve($forecast_req), 'forecast no longer cached';
 
 $cache = Weather::OpenWeatherMap::Cache->new(
   dir    => $tmppath,
-  expiry => 1,
+  expiry => '0.5',
 );
 
 $cache->cache($forecast_orig);
-diag "Sleeping 3 seconds";
-sleep 3;
+diag "Sleeping 1 second";
+sleep 1;
 ok !$cache->retrieve($forecast_req), 'cache expiry ok';
-
-# FIXME cache expiry test
 
 done_testing
