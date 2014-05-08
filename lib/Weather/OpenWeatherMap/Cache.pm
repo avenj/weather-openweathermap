@@ -39,12 +39,7 @@ has expiry => (
   builder   => sub { 1200 },
 );
 
-has max_entries => (
-  is        => 'ro',
-  isa       => Int,
-  builder   => sub { 128 },
-);
-
+## FIXME max_entries ? or a size limit ?
 
 sub make_path {
   my ($self, $obj) = @_;
