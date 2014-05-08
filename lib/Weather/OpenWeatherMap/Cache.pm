@@ -177,6 +177,9 @@ Defaults to using a temporary directory.
 
 =head3 expiry
 
+The duration (in seconds) cache files are considered valid; defaults to
+C<1200>.
+
 =head2 METHODS
 
 =head3 High-level methods
@@ -208,6 +211,8 @@ Subclasses can override the following methods to alter cache behavior.
 =head4 clear
 
 Walk our L</dir>, removing any items that appear to belong to the cache.
+
+Returns the list of removed paths (as strings).
 
 =head4 deserialize
 
