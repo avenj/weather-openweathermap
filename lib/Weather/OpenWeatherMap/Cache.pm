@@ -26,7 +26,7 @@ has dir => (
   is        => 'ro',
   isa       => AbsDir,
   coerce    => 1,
-  builder   => sub { Path::Tiny->tempdir },
+  builder   => sub { Path::Tiny->tempdir(CLEANUP => 1) },
 );
 
 has expiry => (
@@ -125,7 +125,7 @@ sub expire {
       $path->remove
     };
 
-  my ($ts, $result) = @$ref;
+  my ($ts) = @$ref;
   return $path->remove if Time::HiRes::time - $ts > $self->expiry;
   ()
 }
@@ -174,7 +174,11 @@ A simple cache manager for L<Weather::OpenWeatherMap> results.
 
 The directory cache files are saved in.
 
-Defaults to using a temporary directory.
+Defaults to using a temporary directory that is cleaned up during object
+destruction (via L<Path::Tiny> / L<File::Temp>).
+
+If you specify a directory, no automated cleanup is done other than normal
+object expiry checks during calls to L</retrieve>.
 
 =head3 expiry
 
@@ -225,7 +229,7 @@ Uses L<Storable> by default.
 =head4 expire
 
 Takes a L<Weather::OpenWeatherMap::Request> or
-L<Weather::OpenWeatherMap::Result> and removes stale cache data.
+L<Weather::OpenWeatherMap::Result> and removes relevant stale cache data.
 
 Called by L</retrieve> before object retrieval.
 

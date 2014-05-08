@@ -184,7 +184,7 @@ L<Weather::OpenWeatherMap::Request> & L<Weather::OpenWeatherMap::Result>
 classes can be used to create appropriate L<HTTP::Request> instances and parse
 responses from non-blocking HTTP clients.
 
-See L<POE::Weather::OpenWeatherMap> for a non-blocking implementation using
+See L<POEx::Weather::OpenWeatherMap> for a non-blocking implementation using
 the L<POE> ecosystem.
 
 =head2 ATTRIBUTES
@@ -268,7 +268,7 @@ subclass; see L<Weather::OpenWeatherMap::Request>.
 
 =head1 SEE ALSO
 
-L<POE::Weather::OpenWeatherMap>
+L<POEx::Weather::OpenWeatherMap>
 
 =head1 AUTHOR
 
