@@ -52,6 +52,13 @@ has cache_dir => (
   builder   => sub { undef },
 );
 
+has cache_expiry => (
+  lazy      => 1,
+  is        => 'ro',
+  isa       => Maybe[StrictNum],
+  builder   => sub { undef },
+);
+
 has _cache => (
   lazy      => 1,
   is        => 'ro',
@@ -59,7 +66,8 @@ has _cache => (
   builder   => sub {
     my ($self) = @_;
     Weather::OpenWeatherMap::Cache->new(
-      ( $self->cache_dir ? (dir => $self->cache_dir) : () ),
+      ( $self->cache_dir ?    (dir => $self->cache_dir)       : () ),
+      ( $self->cache_expiry ? (expiry => $self->cache_expiry) : () ),
     )
   },
 );
