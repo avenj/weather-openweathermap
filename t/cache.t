@@ -82,26 +82,23 @@ ok $res->wind_gust_kph == 9, 'wind_gust_kph ok';
 ok $res->wind_direction_degrees == 59, 'wind_direction_degrees ok';
 ok $res->wind_direction eq 'ENE', 'wind_direction ok';
 
-## FIXME cache expiry test
 
 
-$req = Weather::OpenWeatherMap::Request->new_for(
+my $forecast_req = Weather::OpenWeatherMap::Request->new_for(
   Forecast =>
     api_key => 'abcd',
     tag     => 'foo',
     location => 'Manchester, NH',
 );
 
-$mockjson = get_test_data('3day');
-
-$orig = Weather::OpenWeatherMap::Result->new_for(
+my $forecast_orig = Weather::OpenWeatherMap::Result->new_for(
   Forecast =>
-    request => $req,
-    json    => $mockjson,
+    request => $forecast_req,
+    json    => get_test_data('3day'),
 );
 
-$cache->cache($orig);
-$cached = $cache->retrieve($req);
+$cache->cache($forecast_orig);
+$cached = $cache->retrieve($forecast_req);
 ok $cached->cached_at,  'cached_at ok';
 $res = $cached->object;
 
@@ -169,5 +166,22 @@ ok $second->conditions_terse eq 'Clouds', 'day 2 conditions_terse ok';
 ok $second->conditions_verbose eq 'broken clouds', 'day 2 conditions_verbose ok';
 ok $second->conditions_code == 803, 'day 2 conditions_code ok';
 ok $second->conditions_icon eq '04d', 'day 2 conditions_icon ok';
+
+ok $cache->clear == 2, 'clear() removed 2 items';
+ok !$cache->retrieve($req),          'current no longer cached';
+ok !$cache->retrieve($forecast_req), 'forecast no longer cached';
+
+
+$cache = Weather::OpenWeatherMap::Cache->new(
+  dir    => $tmppath,
+  expiry => 1,
+);
+
+$cache->cache($forecast_orig);
+diag "Sleeping 3 seconds";
+sleep 3;
+ok !$cache->retrieve($forecast_req), 'cache expiry ok';
+
+# FIXME cache expiry test
 
 done_testing
