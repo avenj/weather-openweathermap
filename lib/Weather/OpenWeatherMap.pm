@@ -8,9 +8,18 @@ use LWP::UserAgent;
 use Types::Standard -all;
 
 
+use Weather::OpenWeatherMap::Cache;
 use Weather::OpenWeatherMap::Error;
+
+
+# Full require list to make Storable retrievals comfortable:
 use Weather::OpenWeatherMap::Request;
+require Weather::OpenWeatherMap::Request::Current;
+require Weather::OpenWeatherMap::Request::Forecast;
+
 use Weather::OpenWeatherMap::Result;
+require Weather::OpenWeatherMap::Result::Current;
+require Weather::OpenWeatherMap::Result::Forecast;
 
 
 use Moo; use MooX::late;
@@ -28,6 +37,33 @@ has api_key => (
   predicate => 1,
   builder   => sub { '' },
 );
+
+has cache => (
+  lazy      => 1,
+  is        => 'ro',
+  isa       => Bool,
+  builder   => sub { 0 },
+);
+
+has cache_dir => (
+  lazy      => 1,
+  is        => 'ro',
+  isa       => Maybe[Str],
+  builder   => sub { undef },
+);
+
+has _cache => (
+  lazy      => 1,
+  is        => 'ro',
+  isa       => InstanceOf['Weather::OpenWeatherMap::Cache'],
+  builder   => sub {
+    my ($self) = @_;
+    Weather::OpenWeatherMap::Cache->new(
+      ( $self->cache_dir ? (dir => $self->cache_dir) : () ),
+    )
+  },
+);
+
 
 has ua => (
   is        => 'ro',
@@ -52,21 +88,27 @@ sub get_weather {
       %args
   );
 
-  my $http_response = $self->ua->request( $my_request->http_request );
+  my $result;
 
-  unless ($http_response->is_success) {
-    die Weather::OpenWeatherMap::Error->new(
-      request => $my_request,
-      source  => 'http',
-      status  => $http_response->status_line,
+  if ( $self->cache && (my $cached = $self->_cache->retrieve($my_request)) ) {
+    $result = $cached->object
+  } else {
+    my $http_response = $self->ua->request( $my_request->http_request );
+
+    unless ($http_response->is_success) {
+      die Weather::OpenWeatherMap::Error->new(
+        request => $my_request,
+        source  => 'http',
+        status  => $http_response->status_line,
+      );
+    }
+
+    $result = Weather::OpenWeatherMap::Result->new_for(
+      $type =>
+        request => $my_request,
+        json    => $http_response->content
     );
   }
-
-  my $result = Weather::OpenWeatherMap::Result->new_for(
-    $type =>
-      request => $my_request,
-      json    => $http_response->content
-  );
 
   unless ($result->is_success) {
     die Weather::OpenWeatherMap::Error->new(
@@ -75,6 +117,8 @@ sub get_weather {
       status  => $result->error,
     )
   }
+
+  $self->_cache->cache($result);
 
   $result
 }

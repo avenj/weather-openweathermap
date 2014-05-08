@@ -35,6 +35,8 @@ my $cached = $cache->retrieve($req);
 ok $cached->cached_at,  'cached_at ok';
 my $res = $cached->object;
 
+ok $res->is_success, 'is_success ok';
+
 ok !$res->data->is_empty,         'data hash has keys';
 ok !$res->error,                  'error ok';
 ok $res->is_success,              'is_success ok';

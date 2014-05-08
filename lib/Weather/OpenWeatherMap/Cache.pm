@@ -25,12 +25,7 @@ has dir => (
   is        => 'ro',
   isa       => AbsDir,
   coerce    => 1,
-  builder   => sub {
-    my $tempdir = Path::Tiny->tempdir;
-    my $path = path( join '/', $tempdir, 'owmcache' );
-    $path->mkpath unless $path->exists;
-    $path
-  },
+  builder   => sub { Path::Tiny->tempdir },
 );
 
 has expiry => (
@@ -178,8 +173,7 @@ A simple cache manager for L<Weather::OpenWeatherMap> results.
 
 The directory cache files are saved in.
 
-Defaults to creating a subdirectory named C<owmcache> under L<Path::Tiny> /
-L<File::Temp> 's best guess at a tempdir.
+Defaults to using a temporary directory.
 
 =head3 expiry
 
