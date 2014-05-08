@@ -184,6 +184,9 @@ L<Weather::OpenWeatherMap::Request> & L<Weather::OpenWeatherMap::Result>
 classes can be used to create appropriate L<HTTP::Request> instances and parse
 responses from non-blocking HTTP clients.
 
+See L<POE::Weather::OpenWeatherMap> for a non-blocking implementation using
+the L<POE> ecosystem.
+
 =head2 ATTRIBUTES
 
 =head3 api_key
@@ -191,6 +194,23 @@ responses from non-blocking HTTP clients.
 Your L<OpenWeatherMap|http://www.openweathermap.org/> API key.
 
 (See L<http://www.openweathermap.org/api> to register for free.)
+
+=head3 cache
+
+A boolean value indicating whether successful results should be cached to
+disk via L<Weather::OpenWeatherMap::Cache>.
+
+Defaults to false. This may change in a future release.
+
+=head3 cache_dir
+
+The directory in which cache files are saved. The default may be fine; see
+L<Weather::OpenWeatherMap::Cache>.
+
+=head3 cache_expiry
+
+The duration (in seconds) for which cache files are considered valid; see
+L<Weather::OpenWeatherMap::Cache>.
 
 =head3 ua
 
@@ -245,6 +265,10 @@ L<Weather::OpenWeatherMap::Request::Forecast>), in which case C<< days
 
 Any extra arguments are passed to the constructor for the appropriate Request
 subclass; see L<Weather::OpenWeatherMap::Request>.
+
+=head1 SEE ALSO
+
+L<POE::Weather::OpenWeatherMap>
 
 =head1 AUTHOR
 
