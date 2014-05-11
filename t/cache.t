@@ -24,11 +24,7 @@ my $orig = Weather::OpenWeatherMap::Result->new_for(
     json    => $mockjson,
 );
 
-use File::Temp 'tempdir';
-my $tmppath = tempdir( CLEANUP => 1 );
-my $cache = Weather::OpenWeatherMap::Cache->new(
-  dir => $tmppath,
-);
+my $cache = Weather::OpenWeatherMap::Cache->new;
 
 $cache->cache($orig);
 my $cached = $cache->retrieve($req);
@@ -173,7 +169,6 @@ ok !$cache->retrieve($forecast_req), 'forecast no longer cached';
 
 
 $cache = Weather::OpenWeatherMap::Cache->new(
-  dir    => $tmppath,
   expiry => '0.5',
 );
 
