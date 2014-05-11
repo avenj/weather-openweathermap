@@ -182,4 +182,13 @@ diag "Sleeping 1 second";
 sleep 1;
 ok !$cache->retrieve($forecast_req), 'cache expiry ok';
 
+ok $cache->cache($forecast_orig, $orig), 'caching multiple items ok';
+cmp_ok $cache->cache_paths, '==', 2, '2 cache files found';
+diag "Sleeping 1 second";
+sleep 1;
+cmp_ok $cache->expire, '==', 2, '2 items expired';
+ok !$cache->cache_paths, 'no cache files found';
+
+
+
 done_testing
