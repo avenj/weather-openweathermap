@@ -9,7 +9,6 @@ package Weather::OpenWeatherMap::Test;
 use v5.10;
 use strictures 1;
 use Carp;
-use JSON::Tiny;
 
 use parent 'Exporter::Tiny';
 our @EXPORT = our @EXPORT_OK = qw/

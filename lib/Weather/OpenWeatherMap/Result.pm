@@ -3,7 +3,7 @@ package Weather::OpenWeatherMap::Result;
 use Carp;
 use strictures 1;
 
-use JSON::Tiny;
+use JSON::MaybeXS;
 
 use Module::Runtime 'use_module';
 use List::Objects::Types -all;
@@ -41,7 +41,7 @@ has data => (
   coerce    => 1,
   builder   => sub {
     my ($self) = @_;
-    JSON::Tiny->new->decode( $self->json )
+    JSON::MaybeXS->new(utf8 => 1)->decode( $self->json )
   },
 );
 
