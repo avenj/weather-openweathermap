@@ -211,7 +211,8 @@ C<1200>.
 
 =head4 cache
 
-Takes a L<Weather::OpenWeatherMap::Result> and caches it to L</dir>.
+Takes a list of L<Weather::OpenWeatherMap::Result> objects and caches to
+L</dir>.
 
 =head4 retrieve
 
