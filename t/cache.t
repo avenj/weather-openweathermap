@@ -5,33 +5,55 @@ sub _build_description { "Testing Cache" }
 use Weather::OpenWeatherMap::Cache;
 use Weather::OpenWeatherMap::Request;
 use Weather::OpenWeatherMap::Result;
+use Weather::OpenWeatherMap::Test;
 
-has current_result => ();
+has current_result_generator => (
+  is      => 'ro',
+  builder => sub {
+    sub {
+      my $req = Weather::OpenWeatherMap::Request->new_for(
+        Current =>
+          api_key  => 'abcd',
+          tag      => 'foo',
+          location => 'Manchester, NH',
+      );
+      Weather::OpenWeatherMap::Result->new_for(
+        Current =>
+          request => $req,
+          json    => get_test_data('current'),
+      )
+    }
+  },
+);
 
-has forecast_result => ();
+has forecast_result_generator => (
+  is      => 'ro',
+  builder => sub {
+    sub {
+      my $req = Weather::OpenWeatherMap::Request->new_for(
+        Forecast =>
+          api_key  => 'abcd',
+          tag      => 'foo',
+          location => 'Manchester, NH',
+      );
+      Weather::OpenWeatherMap::Result->new_for(
+        Forecast =>
+          request => $req,
+          json    => get_test_data('3day'),
+      )
+    }
+  },
+);
 
-has cache_obj => ();
+has cache_obj => (
+  lazy    => 1,
+  is      => 'ro',
+  builder => sub { Weather::OpenWeatherMap::Cache->new },
+);
 
 
 use lib 't/inc';
 with 'Testing::Result::Cachable';
-
-# FIXME
-# Need some cleverness:
-#  - Need a current_result / forecast_result obj
-#  - Testing::Result::Cachable:
-#    - internal pkgs consuming Testing::Result::{Current,Forecast}
-#    - requires 'current_result', 'forecast_result', 'cache_obj'
-#    - Caches and retrieves bare current_result / forecast_result,
-#      runs result tests
-#    - Runs Testing::Result tests to populate objects,
-#      caches and retrieves,
-#      runs result tests
-#    - Tests other cache functions
-#    
-#  - Test class:
-#    - sets up current_result and forecast_result based on ->get_mock_json
-#    - consumes Testing::Result::Cachable 
 
 run_me;
 done_testing

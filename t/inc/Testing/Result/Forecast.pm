@@ -4,12 +4,14 @@ use Test::Roo::Role;
 with 'Testing::Result';
 
 has first => (
+  lazy    => 1,
   is      => 'ro',
   writer  => 'set_first',
   builder => sub { shift->result_obj->as_array->get(0) },
 );
 
 has second => (
+  lazy    => 1,
   is      => 'ro',
   writer  => 'set_second',
   builder => sub { shift->result_obj->as_array->get(1) },
