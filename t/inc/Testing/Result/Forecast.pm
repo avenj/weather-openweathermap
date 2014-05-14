@@ -122,8 +122,22 @@ test 'temperatures' => sub {
 
   cmp_ok $self->first->temp_min_c, '==', -1,
     'first temp_min_c';
+  cmp_ok $self->second->temp_min_c, '==', -1,
+    'second temp_min_c';
+
   cmp_ok $self->first->temp_max_c, '==', 4,
     'first temp_max_c';
+  cmp_ok $self->second->temp_max_c, '==', 4,
+    'second temp_max_c';
+
+  my $temp_obj = $self->first->temp;
+  isa_ok $temp_obj, 'Weather::OpenWeatherMap::Result::Forecast::Day::Temps';
+  cmp_ok $temp_obj->min,   'eq', '30.67', 'temp->min';
+  cmp_ok $temp_obj->max,   'eq', '40.28', 'temp->max';
+  cmp_ok $temp_obj->morn,  'eq', '40.28', 'temp->morn';
+  cmp_ok $temp_obj->eve,   'eq', '38.98', 'temp->eve';
+  cmp_ok $temp_obj->night, 'eq', '30.67', 'temp->night';
+  cmp_ok $temp_obj->day,   'eq', '40.28', 'temp->day';
 };
 
 test 'wind' => sub {
