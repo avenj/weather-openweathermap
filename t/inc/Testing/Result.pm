@@ -1,6 +1,7 @@
 package Testing::Result;
 
 use Test::Roo::Role;
+use Scalar::Util 'blessed';
 
 use Weather::OpenWeatherMap::Test;
 
@@ -13,6 +14,32 @@ sub get_mock_json {
   get_test_data($type)
 }
 
+test 'missing constructor args' => sub {
+  my ($self) = @_;
+  my $class = blessed $self->result_obj;
+
+  eval {; 
+    $class->new(
+      json => $self->mock_json
+    )
+  };
+  ok $@, 'missing request dies';
+
+  eval {;
+    $class->new(
+      json    => $self->mock_json,
+      request => 1,
+    )
+  };
+  ok $@, 'bad request dies';
+
+  eval {;
+    $class->new(
+      request => $self->request_obj
+    )
+  };
+  ok $@, 'missing json dies';
+};
 
 test 'data hash has keys' => sub {
   my ($self) = @_;
