@@ -10,21 +10,23 @@ requires 'request_obj',
 
 test 'accessors' => sub {
   my ($self) = @_;
-  isa_ok $self->request_obj, 'Weather::OpenWeatherMap::Request';
-  ok $self->request_obj->api_key,  'api_key';
-  ok $self->request_obj->location, 'location';
-  ok $self->request_obj->tag,      'tag';
-  ok is_StrictNum $self->request_obj->ts, 'ts';
-  like $self->request_obj->url,
+  my $req = $self->request_obj;
+  isa_ok $req, 'Weather::OpenWeatherMap::Request';
+  ok $req->api_key,  'api_key';
+  ok $req->location, 'location';
+  ok $req->tag,      'tag';
+  ok is_StrictNum $req->ts, 'ts';
+  like $req->url,
        qr{^http://api.openweathermap.org/.+},
        'url';
 };
 
 test 'http request' => sub {
   my ($self) = @_;
-  isa_ok $self->request_obj->http_request, 'HTTP::Request';
-  cmp_ok $self->request_obj->http_request->header('x-api-key'),
-    'eq', $self->request_obj->api_key,
+  my $req = $self->request_obj;
+  isa_ok $req->http_request, 'HTTP::Request';
+  cmp_ok $req->http_request->header('x-api-key'),
+    'eq', $req->api_key,
     'request header';
 };
 
