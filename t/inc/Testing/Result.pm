@@ -14,6 +14,24 @@ sub get_mock_json {
   get_test_data($type)
 }
 
+test 'handles API errors' => sub {
+  my ($self) = @_;
+
+  my $class = blessed $self->result_obj;
+  my $mockjs = $self->get_mock_json('failure');
+
+  my $res = $class->new(
+    request => $self->request_obj,
+    json    => $mockjs
+  );
+
+  ok !$res->is_success, 'is_success false';
+  cmp_ok $res->response_code, '==', 404,
+    'failure response_code ok';
+  cmp_ok $res->error, 'eq', 'Not found',
+    'error ok';
+};
+
 test 'missing constructor args' => sub {
   my ($self) = @_;
   my $class = blessed $self->result_obj;
@@ -23,7 +41,7 @@ test 'missing constructor args' => sub {
       json => $self->mock_json
     )
   };
-  ok $@, 'missing request dies';
+  like $@, qr/request/, 'missing request dies';
 
   eval {;
     $class->new(
@@ -31,14 +49,14 @@ test 'missing constructor args' => sub {
       request => 1,
     )
   };
-  ok $@, 'bad request dies';
+  like $@, qr/request/, 'bad request dies';
 
   eval {;
     $class->new(
       request => $self->request_obj
     )
   };
-  ok $@, 'missing json dies';
+  like $@, qr/json/, 'missing json dies';
 };
 
 test 'data hash has keys' => sub {

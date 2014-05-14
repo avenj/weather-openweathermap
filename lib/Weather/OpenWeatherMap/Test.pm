@@ -20,23 +20,28 @@ our @EXPORT = our @EXPORT_OK = qw/
   mock_http_ua
 /;
 
-our $JSON_Current = path(
-    dist_file( 'Weather-OpenWeatherMap', 'current.json' )
-  )->slurp_utf8;
-our $JSON_Forecast = path(
-    dist_file( 'Weather-OpenWeatherMap', '3day.json' )
-  )->slurp_utf8;
-
 
 sub get_test_data {
   my $type = lc (shift || return);
-  for ($type) {
-    return $JSON_Current
-      if $type eq 'current';
 
-    return $JSON_Forecast
-      if $type eq '3day'
-      or $type eq 'forecast';
+  my $base = 'Weather-OpenWeatherMap';
+  my $path;
+  DATATYPE: {
+    if ($type eq 'current') {
+      $path = dist_file($base, 'current.json')
+    }
+
+    if ($type =~ /^3day/ || $type eq 'forecast') {
+      $path = dist_file($base, '3day.json')
+    }
+
+    if ($type eq 'failure' || $type eq 'error') {
+      $path = dist_file($base, 'failure.json')
+    }
+  }
+
+  if ($path) {
+    return path($path)->slurp_utf8
   }
 
   confess "Unknown type $type"

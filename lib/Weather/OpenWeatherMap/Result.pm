@@ -108,7 +108,8 @@ L<Weather::OpenWeatherMap::Result::Forecast>
 
 =head3 data
 
-This is the decoded hash from the attached L</json>. 
+This is the decoded hash from the attached L</json> (as a
+L<List::Objects::WithUtils::Hash>).
 
 Subclasses provide more convenient accessors for retrieving desired
 information.
