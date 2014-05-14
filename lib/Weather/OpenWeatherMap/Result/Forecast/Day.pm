@@ -76,10 +76,13 @@ has wind_direction_degrees => (
 
 { package
     Weather::OpenWeatherMap::Result::Forecast::Day::Temps;
-  use strict; use warnings FATAL => 'all';
-  use Moo;
-  has [qw/ morn night eve min max day /], 
-    ( is => 'ro', default => sub { 0 } );
+  use Moo; use MooX::late;
+  has [qw/ morn night eve min max day /], ( 
+    is      => 'ro', 
+    isa     => $CoercedInt,
+    coerce  => 1, 
+    default => sub { 0 } 
+  );
 }
 
 has temp => (
