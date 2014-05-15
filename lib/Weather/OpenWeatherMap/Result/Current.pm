@@ -251,9 +251,13 @@ Atmospheric pressure in hPa.
 
 A UTC L<DateTime> object representing sunrise time.
 
+(Not available for L<Weather::OpenWeatherMap::Result::Find> result items.)
+
 =head4 sunset
 
 A UTC L<DateTime> object representing sunset time.
+
+(Not available for L<Weather::OpenWeatherMap::Result::Find> result items.)
 
 =head3 Temperature
 
