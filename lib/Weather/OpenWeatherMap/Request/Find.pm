@@ -79,6 +79,10 @@ The maximum number of results to ask for.
 The type of search to perform; C<accurate> looks for exact matches, C<like>
 searches by substring.
 
+=head1 SEE ALSO
+
+L<Weather::OpenWeatherMap::Result::Find>
+
 =head1 AUTHOR
 
 Jon Portnoy <avenj@cobaltirc.org>

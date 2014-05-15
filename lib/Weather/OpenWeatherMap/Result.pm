@@ -108,11 +108,7 @@ Weather::OpenWeatherMap::Result - Weather lookup result superclass
 
 This is the parent class for L<Weather::OpenWeatherMap> weather results.
 
-See also:
-
-L<Weather::OpenWeatherMap::Result::Current>
-
-L<Weather::OpenWeatherMap::Result::Forecast>
+The L</"SEE ALSO"> section links known subclasses.
 
 =head2 ATTRIBUTES
 
@@ -174,13 +170,15 @@ Serialization wrapper for use by subclasses.
 
 =head1 SEE ALSO
 
-L<http://www.openweathermap.org>
+L<http://www.openweathermap.org/api>
 
 L<Weather::OpenWeatherMap>
 
 L<Weather::OpenWeatherMap::Result::Current>
 
 L<Weather::OpenWeatherMap::Result::Forecast>
+
+L<Weather::OpenWeatherMap::Result::Find>
 
 =head1 AUTHOR
 
