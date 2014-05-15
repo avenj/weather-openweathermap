@@ -104,6 +104,30 @@ L<Weather::OpenWeatherMap::Result::Current> instance:
 
 See L<Weather::OpenWeatherMap::Result::Current>.
 
+The current weather returned by a Find is not quite as complete as a full
+L<Weather::OpenWeatherMap::Request::Current> might return. In particular:
+
+=over
+
+=item *
+
+The B<country> attribute is likely to be a two-letter region identifier, not a
+full country name.
+
+=item *
+
+The B<sunrise> and B<sunset> attributes are unavailable.
+
+=item *
+
+Wind gust speed may be unavailable.
+
+=item *
+
+The B<station> name is unavailable.
+
+=back
+
 =head3 iter
 
 Returns an iterator that, when called, returns the next
