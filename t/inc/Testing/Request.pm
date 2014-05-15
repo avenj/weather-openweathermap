@@ -17,7 +17,7 @@ test 'accessors' => sub {
   ok $req->tag,      'tag';
   ok is_StrictNum $req->ts, 'ts';
   like $req->url,
-       qr{^http://api.openweathermap.org/.+},
+       qr{^http://api.openweathermap.org/},
        'url';
 };
 
