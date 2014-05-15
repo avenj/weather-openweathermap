@@ -17,9 +17,8 @@ has max => (
 
 sub _url_bycode {
   my ($self, $code) = @_;
-  ## FIXME better error handling here, cannot find on a city code
   carp "Find does not support city codes";
-  return ''
+  return 'http://api.openweathermap.org/data/2.5/find'
 }
 
 sub _url_bycoord {

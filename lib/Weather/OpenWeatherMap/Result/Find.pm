@@ -34,12 +34,15 @@ has _list => (
   builder => sub {
     my ($self) = @_;
     my @list = @{ $self->data->{list} || [] };
-    map {; 
-      Weather::OpenWeatherMap::Result::Current->new(
-        request => $self->request,
-        json    => $_,
-      )
-    } @list
+    [
+      map {; 
+        Weather::OpenWeatherMap::Result::Current->new(
+          request => $self->request,
+          json    => $self->encode_json($_),
+          data    => +{%$_},
+        )
+      } @list
+    ]
   },
 );
 
