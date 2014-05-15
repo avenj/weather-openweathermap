@@ -26,17 +26,25 @@ sub get_test_data {
 
   my $base = 'Weather-OpenWeatherMap';
   my $path;
-  DATATYPE: {
+  DTYPE: {
     if ($type eq 'current') {
-      $path = dist_file($base, 'current.json')
+      $path = dist_file($base, 'current.json');
+      last DTYPE
     }
 
     if ($type =~ /^3day/ || $type eq 'forecast') {
-      $path = dist_file($base, '3day.json')
+      $path = dist_file($base, '3day.json');
+      last DTYPE
     }
 
     if ($type eq 'failure' || $type eq 'error') {
-      $path = dist_file($base, 'failure.json')
+      $path = dist_file($base, 'failure.json');
+      last DTYPE
+    }
+
+    if ($type eq 'find' || $type eq 'search') {
+      $path = dist_file($base, 'find.json');
+      last DTYPE
     }
   }
 

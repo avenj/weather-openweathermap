@@ -18,19 +18,31 @@ test 'forecast default days' => sub {
 
 test 'forecast request url by name' => sub {
   my ($self) = @_;
-  my $re = $self->rx_base .'q=\S+&units=imperial&cnt=7';
+  my $re = $self->rx_base 
+            . 'q=\S+&units='
+            . $self->request_obj->_units
+            . '&cnt='
+            . $self->request_obj->days;
   cmp_ok $self->request_obj->url, '=~', $re, 'by name';
 };
 
 test 'forecast request url by coord' => sub {
   my ($self) = @_;
-  my $re = $self->rx_base .'lat=\d+&lon=\d+&units=imperial&cnt=7';
+  my $re = $self->rx_base 
+            . 'lat=\S+&lon=\S+&units='
+            . $self->request_obj_bycoord->_units
+            . '&cnt='
+            . $self->request_obj_bycoord->days;
   cmp_ok $self->request_obj_bycoord->url, '=~', $re, 'by coord';
 };
 
 test 'forecast request url by code' => sub {
   my ($self) = @_;
-  my $re = $self->rx_base .'id=\d+&units=imperial&cnt=7';
+  my $re = $self->rx_base 
+            . 'id=\d+&units='
+            . $self->request_obj_bycode->_units
+            . '&cnt='
+            . $self->request_obj_bycode->days;
   cmp_ok $self->request_obj_bycode->url, '=~', $re, 'by code';
 };
 

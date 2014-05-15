@@ -3,7 +3,7 @@ package Weather::OpenWeatherMap::Result;
 use Carp;
 use strictures 1;
 
-use JSON::MaybeXS;
+use JSON::MaybeXS ();
 
 use Module::Runtime 'use_module';
 use List::Objects::Types -all;
@@ -19,6 +19,16 @@ sub new_for {
   confess "Expected a subclass type" unless $type;
   my $subclass = $class .'::'. ucfirst($type);
   use_module($subclass)->new(@_)
+}
+
+sub decode_json {
+  my (undef, $js) = @_;
+  JSON::MaybeXS->new(utf8 => 1)->decode( $js )
+}
+
+sub encode_json {
+  my (undef, $data) = @_;
+  JSON::MaybeXS->new(utf8 => 1)->encode( $data )
 }
 
 
@@ -41,7 +51,7 @@ has data => (
   coerce    => 1,
   builder   => sub {
     my ($self) = @_;
-    JSON::MaybeXS->new(utf8 => 1)->decode( $self->json )
+    $self->decode_json( $self->json )
   },
 );
 
@@ -153,6 +163,14 @@ Factory method; returns a new object belonging to the appropriate subclass:
       request => $orig_request,
       json    => $raw_json,
   );
+
+=head3 decode_json
+
+Result deserialization wrapper for use by subclasses.
+
+=head3 encode_json
+
+Serialization wrapper for use by subclasses.
 
 =head1 SEE ALSO
 
