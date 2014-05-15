@@ -14,9 +14,15 @@ has max => (
   builder   => sub { 10 },
 );
 
+has type => (
+  lazy      => 1,
+  is        => 'ro',
+  isa       => Str,
+  builder   => sub { 'accurate' },
+);
+
 
 sub _url_bycode {
-  my ($self, $code) = @_;
   carp "Find does not support city codes";
   return 'http://api.openweathermap.org/data/2.5/find'
 }
@@ -26,6 +32,7 @@ sub _url_bycoord {
   my ($lat, $long) = map {; uri_escape_utf8($_) } @_;
   "http://api.openweathermap.org/data/2.5/find?lat=$lat&lon=$long"
     . '&units=' . $self->_units
+    . '&type='  . $self->type
     . '&cnt='   . $self->max
 }
 
@@ -34,6 +41,7 @@ sub _url_byname {
   'http://api.openweathermap.org/data/2.5/find?q='
     . join(',', map {; uri_escape_utf8($_) } @parts)
     . '&units=' . $self->_units
+    . '&type='  . $self->type
     . '&cnt='   . $self->max
 }
 
@@ -65,6 +73,11 @@ request.
 =head3 max
 
 The maximum number of results to ask for.
+
+=head3 type
+
+The type of search to perform; C<accurate> looks for exact matches, C<like>
+searches by substring.
 
 =head1 AUTHOR
 
