@@ -57,6 +57,10 @@ sub make_path {
       $fname .= 'F';
       last TYPE
     }
+    if ($obj->isa('Weather::OpenWeatherMap::Request::Find')) {
+      $fname .= 'S';
+      last TYPE
+    }
     confess "Fell through; no clue what to do with $obj"
   }
 
