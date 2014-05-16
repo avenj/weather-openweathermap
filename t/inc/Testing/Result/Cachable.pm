@@ -81,6 +81,9 @@ test 'cache populated result' => sub {
   my $forecast = $self->forecast_result_generator->();
   isa_ok $forecast, 'Weather::OpenWeatherMap::Result::Forecast';
 
+  my $find = $self->find_result_generator->();
+  isa_ok $find, 'Weather::OpenWeatherMap::Result::Find';
+
   # force attr population:
   Testing::Result::Cachable::Current->run_tests( +{
     result_obj  => $current,
@@ -92,11 +95,17 @@ test 'cache populated result' => sub {
     request_obj => $forecast->request,
     mock_json   => $forecast->json,
   } );
+  Testing::Result::Cachable::Find->run_tests( +{
+    result_obj  => $find,
+    request_obj => $find->request,
+    mock_json   => $find->json,
+  } );
 
-  $cache->cache($current, $forecast);
+  $cache->cache($current, $forecast, $find);
 
   my $cached_current  = $cache->retrieve($current->request);
   my $cached_forecast = $cache->retrieve($forecast->request);
+  my $cached_find     = $cache->retrieve($find->request);
 
   Testing::Result::Cachable::Current->run_tests( +{
       result_obj  => $cached_current->object,
@@ -108,6 +117,11 @@ test 'cache populated result' => sub {
       request_obj => $cached_forecast->object->request,
       mock_json   => $cached_forecast->object->json,
   } );
+  Testing::Result::Cachable::Find->run_tests( +{
+      result_obj  => $cached_find->object,
+      request_obj => $cached_find->object->request,
+      mock_json   => $cached_find->object->json,
+  } ); 
 };
 
 test 'cache expiry' => sub {
