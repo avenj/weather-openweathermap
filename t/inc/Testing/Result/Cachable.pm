@@ -14,11 +14,18 @@ use Weather::OpenWeatherMap::Cache;
   with 'Testing::Result::Forecast';
 }
 
+{ package Testing::Result::Cachable::Find;
+  use Test::Roo;
+  has [qw/request_obj result_obj mock_json/] => ( is => 'ro' );
+  with 'Testing::Result::Find';
+}
+
 
 use Test::Roo::Role;
 
 requires 'current_result_generator', 
-         'forecast_result_generator', 
+         'forecast_result_generator',
+         'find_result_generator',
          'cache_obj';
 
 after each_test => sub {
@@ -37,11 +44,15 @@ test 'cache bare result' => sub {
   my $forecast = $self->forecast_result_generator->();
   isa_ok $forecast, 'Weather::OpenWeatherMap::Result::Forecast';
 
+  my $find = $self->find_result_generator->();
+  isa_ok $find, 'Weather::OpenWeatherMap::Result::Find';
+
   $cache->cache($current);
-  $cache->cache($forecast);
+  $cache->cache($forecast, $find);
 
   my $cached_current  = $cache->retrieve($current->request);
   my $cached_forecast = $cache->retrieve($forecast->request);
+  my $cached_find     = $cache->retrieve($find->request);
 
   Testing::Result::Cachable::Current->run_tests( +{
       result_obj  => $cached_current->object,
@@ -52,6 +63,11 @@ test 'cache bare result' => sub {
       result_obj  => $cached_forecast->object,
       request_obj => $cached_forecast->object->request,
       mock_json   => $cached_forecast->object->json,
+  } );
+  Testing::Result::Cachable::Find->run_tests( +{
+      result_obj  => $cached_find->object,
+      request_obj => $cached_find->object->request,
+      mock_json   => $cached_find->object->json,
   } );
 };
 

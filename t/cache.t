@@ -45,6 +45,26 @@ has forecast_result_generator => (
   },
 );
 
+has find_result_generator => (
+  is      => 'ro',
+  builder => sub {
+    sub {
+      my $req = Weather::OpenWeatherMap::Request->new_for(
+        Find =>
+          api_key  => 'abcd',
+          tag      => 'foo',
+          location => 'London',
+          max      => 2,
+      );
+      Weather::OpenWeatherMap::Result->new_for(
+        Find =>
+          request => $req,
+          json    => get_test_data('find'),
+      )
+    }
+  },
+);
+
 has cache_obj => (
   lazy    => 1,
   is      => 'ro',
