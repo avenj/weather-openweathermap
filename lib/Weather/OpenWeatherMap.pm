@@ -83,8 +83,7 @@ has ua => (
 sub get_weather {
   my ($self, %args) = @_;
 
-  my $location = $args{location};
-  croak "Missing 'location =>' in query" unless $location;
+  croak "Missing 'location =>' in query" unless $args{location};
 
   my $type = 
       delete $args{forecast} ? 'Forecast' 
