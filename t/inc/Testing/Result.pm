@@ -4,8 +4,11 @@ use Test::Roo::Role;
 
 use Scalar::Util 'blessed';
 
-use Test::Memory::Cycle;
 use Weather::OpenWeatherMap::Test;
+use Test::Memory::Cycle;
+use Test::File::ShareDir -share => {
+  -dist => { 'Weather-OpenWeatherMap' => 'share' },
+};
 
 
 requires 'request_obj', 'result_obj', 'mock_json';
