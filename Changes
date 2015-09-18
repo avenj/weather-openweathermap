@@ -1,5 +1,11 @@
 Revision history for Perl module Weather-OpenWeatherMap
 
+0.002004 2015-09-18
+
+  - use strictures 2 for saner fatal warnings behavior
+
+  - use Test::File::ShareDir for Result tests
+
 0.002003 2014-08-16
 
   - Fix Path object coercion in cache handler
