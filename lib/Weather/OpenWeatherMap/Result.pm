@@ -1,7 +1,7 @@
 package Weather::OpenWeatherMap::Result;
 
 use Carp;
-use strictures 1;
+use strictures 2;
 
 use JSON::MaybeXS ();
 

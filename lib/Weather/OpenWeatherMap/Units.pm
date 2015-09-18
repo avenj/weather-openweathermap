@@ -1,7 +1,7 @@
 package Weather::OpenWeatherMap::Units;
 
 use feature 'state';
-use strictures 1;
+use strictures 2;
 use Carp;
 
 use parent 'Exporter::Tiny';

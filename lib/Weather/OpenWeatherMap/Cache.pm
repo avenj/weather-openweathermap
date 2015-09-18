@@ -1,7 +1,7 @@
 package Weather::OpenWeatherMap::Cache;
 
 use Carp;
-use strictures 1;
+use strictures 2;
 
 use Storable ();
 use Time::HiRes ();
@@ -41,11 +41,11 @@ sub make_path {
   my ($self, $obj) = @_;
 
   $obj = $obj->request
-    if is_Object($obj)
+    if blessed($obj)
     and $obj->isa('Weather::OpenWeatherMap::Result');
 
   confess "Expected a Weather::OpenWeatherMap::Request but got $obj"
-    unless is_Object($obj) and $obj->isa('Weather::OpenWeatherMap::Request');
+    unless blessed($obj) and $obj->isa('Weather::OpenWeatherMap::Request');
 
   my $fname = 'W';
   TYPE: {
@@ -85,7 +85,7 @@ sub cache {
   my ($self, @results) = @_;
   for my $result (@results) {
     confess "Expected a Weather::OpenWeatherMap::Result but got $result"
-      unless is_Object($result) 
+      unless blessed($result) 
       and $result->isa('Weather::OpenWeatherMap::Result');
 
     my $request = $result->request;

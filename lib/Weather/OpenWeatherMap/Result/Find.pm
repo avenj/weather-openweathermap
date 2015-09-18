@@ -2,7 +2,7 @@ package Weather::OpenWeatherMap::Result::Find;
 
 use v5.10;
 use Carp;
-use strictures 1;
+use strictures 2;
 
 use List::Objects::WithUtils;
 use Types::Standard      -all;

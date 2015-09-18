@@ -1,7 +1,7 @@
 package Weather::OpenWeatherMap::Request;
 
 use v5.10;
-use strictures 1;
+use strictures 2;
 use Carp;
 
 use Types::Standard -all;

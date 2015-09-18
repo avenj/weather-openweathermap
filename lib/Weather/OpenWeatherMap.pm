@@ -1,6 +1,6 @@
 package Weather::OpenWeatherMap;
 
-use strictures 1;
+use strictures 2;
 use Carp;
 
 use LWP::UserAgent;

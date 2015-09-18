@@ -1,6 +1,6 @@
 package Weather::OpenWeatherMap::Result::Current;
 
-use strictures 1;
+use strictures 2;
 use Carp;
 
 use List::Objects::Types -all;

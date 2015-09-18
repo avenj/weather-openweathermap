@@ -1,6 +1,6 @@
 package Weather::OpenWeatherMap::Result::Forecast::Day;
 
-use strictures 1;
+use strictures 2;
 
 use Types::Standard       -all;
 use Types::DateTime       -all;
