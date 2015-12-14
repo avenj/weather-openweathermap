@@ -265,21 +265,25 @@ control LWP options:
     tag  => 'foo',
   );
 
-Request a weather report for the given C<< location => >>.
+Request a weather report (in the form of a L<Weather::OpenWeatherMap::Result>
+object) for the given C<< location => >>.
 
 The location can be a 'City, State' or 'City, Country' string, an
 L<OpenWeatherMap|http://www.openweathermap.org/> city code, or a 'lat X, long
 Y' string.
 
 Requests the current weather by default (see
-L<Weather::OpenWeatherMap::Request::Current>).
+L<Weather::OpenWeatherMap::Request::Current> and
+L<Weather::OpenWeatherMap::Result::Current>).
 
 If passed C<< forecast => 1 >>, requests a weather forecast (see
-L<Weather::OpenWeatherMap::Request::Forecast>), in which case C<< days
-=> $count >> can be specified (up to 14).
+L<Weather::OpenWeatherMap::Request::Forecast> and
+L<Weather::OpenWeatherMap::Result::Forecast>), in which case C<< days =>
+$count >> can be specified (up to 14).
 
 If passed C<< find => 1 >>, requests search results for a given location name
-or latitude & longitude; see L<Weather::OpenWeatherMap::Request::Find>.
+or latitude & longitude; see L<Weather::OpenWeatherMap::Request::Find> and
+L<Weather::OpenWeatherMap::Result::Find>.
 
 Any extra arguments are passed to the constructor for the appropriate Request
 subclass; see L<Weather::OpenWeatherMap::Request>.
