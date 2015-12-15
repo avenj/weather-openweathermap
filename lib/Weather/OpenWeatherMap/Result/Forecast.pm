@@ -53,7 +53,11 @@ has count => ( lazy_for Int,
 
 has _forecast_list => ( lazy_for ArrayObj,
   builder => sub { 
-    my @list = @{ shift->data->{list} || [] };
+    my ($self) = @_;
+    my @list = @{ $self->data->{list} || [] };
+    # FIXME
+    # list of either Day or Hour objects
+    #  (check $self->request->hourly ?)
     [ map {;
       ref $_ eq 'HASH' ?
         Weather::OpenWeatherMap::Result::Forecast::Day->new(%$_)

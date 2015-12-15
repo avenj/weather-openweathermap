@@ -12,6 +12,12 @@ use Moo;
 
 use Storable 'freeze';
 
+# FIXME
+# move most of this to a Forecast::Block superclass
+#  add Forecast::Day, Forecast::Hour subclasses
+#  figure out diffs between ::Day and ::Hour reports
+#  construct appropiate obj in Result::Forecast->_forecast_list
+
 my $CoercedInt = Int->plus_coercions(StrictNum, sub { int });
 
 has dt => (
