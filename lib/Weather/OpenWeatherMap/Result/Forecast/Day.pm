@@ -20,6 +20,7 @@ use Storable 'freeze';
 
 my $CoercedInt = Int->plus_coercions(StrictNum, sub { int });
 
+# shareable in parent class:
 has dt => (
   is        => 'ro',
   isa       => DateTimeUTC,
@@ -40,6 +41,8 @@ has humidity => (
   builder   => sub { 0 },
 );
 
+# FIXME is this still correct? looks to be a HASH in hourly reports,
+#   need to check on daily
 has cloud_coverage => (
   init_arg  => 'clouds',
   is        => 'ro',
@@ -48,7 +51,8 @@ has cloud_coverage => (
   builder   => sub { 0 },
 );
 
-
+# FIXME is this still correct? looks to be a HASH in hourly reports,
+#    need to check on daily
 has wind_speed_mph => (
   init_arg  => 'speed',
   is        => 'ro',
@@ -88,6 +92,7 @@ has wind_direction_degrees => (
     ( is => 'ro', default => sub { 0 } );
 }
 
+# FIXME current temp in Hour, obj in Day:
 has temp => (
   is        => 'ro',
   isa       => (InstanceOf[__PACKAGE__.'::Temps'])
@@ -102,6 +107,7 @@ has temp => (
   },
 );
 
+# FIXME omit temp_min/temp_max in Hour:
 has temp_min_f => (
   lazy      => 1,
   is        => 'ro',
@@ -134,7 +140,7 @@ has temp_max_c => (
   builder   => sub { f_to_c shift->temp_max_f },
 );
 
-
+# FIXME these are share-able in parent class:
 
 has _weather_list => (
   init_arg  => 'weather',
