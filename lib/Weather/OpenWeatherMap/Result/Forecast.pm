@@ -26,6 +26,9 @@ sub lazy_for {
 use Moo; 
 extends 'Weather::OpenWeatherMap::Result';
 
+has hourly => ( lazy_for Bool,
+  builder => sub { 0 },
+);
 
 has id => ( lazy_for Int,
   builder => sub { shift->data->{city}->{id} },
