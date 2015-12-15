@@ -118,6 +118,7 @@ sub get_weather {
       $type =>
         request => $my_request,
         json    => $http_response->content
+        # FIXME pass ->hourly if request isa Forecast and $my_request->hourly
     );
   }
 
