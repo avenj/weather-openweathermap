@@ -6,6 +6,12 @@ use Types::Standard -all;
 use Moo;
 extends 'Weather::OpenWeatherMap::Request';
 
+has hourly => (
+  lazy      => 1,
+  is        => 'ro',
+  isa       => Bool,
+  builder   => sub { 0 },
+);
 
 has days => (
   lazy      => 1,
@@ -17,8 +23,9 @@ has days => (
 
 sub _url_bycode {
   my ($self, $code) = @_;
-  'http://api.openweathermap.org/data/2.5/forecast/daily?id='
-    . uri_escape_utf8($code)
+  'http://api.openweathermap.org/data/2.5/forecast/'
+    . ($self->hourly ? '' : 'daily')
+    . '?id=' . uri_escape_utf8($code)
     . '&units=' . $self->_units
     . '&cnt='   . $self->days
 }
@@ -26,15 +33,18 @@ sub _url_bycode {
 sub _url_bycoord {
   my $self = shift;
   my ($lat, $long) = map {; uri_escape_utf8($_) } @_;
-  "http://api.openweathermap.org/data/2.5/forecast/daily?lat=$lat&lon=$long"
+  'http://api.openweathermap.org/data/2.5/forecast/'
+    . ($self->hourly ? '' : 'daily')
+    . "?lat=${lat}&lon=${long}"
     . '&units=' . $self->_units
     . '&cnt='   . $self->days
 }
 
 sub _url_byname {
   my ($self, @parts) = @_;
-  'http://api.openweathermap.org/data/2.5/forecast/daily?q='
-    . join(',', map {; uri_escape_utf8($_) } @parts)
+  'http://api.openweathermap.org/data/2.5/forecast/'
+    . ($self->hourly ? '' : 'daily')
+    . '?q=' . join(',', map {; uri_escape_utf8($_) } @parts)
     . '&units=' . $self->_units
     . '&cnt='   . $self->days
 }

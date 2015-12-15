@@ -57,7 +57,7 @@ has _forecast_list => ( lazy_for ArrayObj,
     [ map {;
       ref $_ eq 'HASH' ?
         Weather::OpenWeatherMap::Result::Forecast::Day->new(%$_)
-        : carp "expected a HASH but got $_"
+        : (carp "expected a HASH but got $_" and ())
     } @list ]
   },
 );
