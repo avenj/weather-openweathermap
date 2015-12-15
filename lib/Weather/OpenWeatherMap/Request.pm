@@ -1,6 +1,6 @@
 package Weather::OpenWeatherMap::Request;
 
-use v5.10;
+use feature 'state';
 use strictures 2;
 use Carp;
 

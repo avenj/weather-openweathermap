@@ -6,7 +6,6 @@ package Weather::OpenWeatherMap::Test;
 
 =cut
 
-use v5.10;
 use strictures 2;
 use Carp;
 

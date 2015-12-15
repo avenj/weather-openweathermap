@@ -1,6 +1,5 @@
 package Weather::OpenWeatherMap::Result::Forecast;
 
-use v5.10;
 use strictures 2;
 use Carp;
 
