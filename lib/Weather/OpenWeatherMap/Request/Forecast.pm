@@ -71,7 +71,13 @@ request.
 
 =head3 days
 
-The number of days to ask for (up to 14).
+The number of days to ask for (up to 16).
+
+=head3 hourly
+
+Request an hourly (well, 3-hour blocks, really) forecast.
+
+(By default, a daily report is requested.)
 
 =head1 AUTHOR
 
