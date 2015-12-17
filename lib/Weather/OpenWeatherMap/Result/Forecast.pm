@@ -58,14 +58,21 @@ has _forecast_list => ( lazy_for ArrayObj,
   builder => sub { 
     my ($self) = @_;
     my @list = @{ $self->data->{list} || [] };
-    # FIXME
-    # list of either Day or Hour objects
-    #  (check $self->request->hourly ?)
-    [ map {;
+    warn "No items in forecast list (name: @{[$self->name]})"
+      unless @list;
+    # FIXME test that bad items in @list warn and add nothing
+    # FIXME POD
+    $self->request->hourly ?
+      [ map {;
+        ref $_ eq 'HASH' ?
+          Weather::OpenWeatherMap::Result::Forecast::Hour->new(%$_)
+          : (carp "Expected a HASH but got $_" and ())
+      } @list ]
+    : [ map {;
       ref $_ eq 'HASH' ?
         Weather::OpenWeatherMap::Result::Forecast::Day->new(%$_)
         : (carp "expected a HASH but got $_" and ())
-    } @list ]
+      } @list ]
   },
 );
 
