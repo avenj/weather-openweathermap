@@ -4,11 +4,14 @@ use feature 'state';
 use strictures 2;
 use Carp;
 
+use Types::Standard  -all;
+
 use parent 'Exporter::Tiny';
 our @EXPORT = our @EXPORT_OK = qw/
   f_to_c
   mph_to_kph
   deg_to_compass
+  CoercedInt
 /;
 
 sub f_to_c { ($_[0] - 32) * (5/9) }
@@ -24,6 +27,9 @@ sub deg_to_compass {
   /];
   $compass->[ $val % 16 ]
 }
+
+my $CoercedInt = Int->plus_coercions(StrictNum, sub { int });
+sub CoercedInt { $CoercedInt }
 
 =pod
 

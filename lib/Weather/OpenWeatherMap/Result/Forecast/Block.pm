@@ -1,4 +1,4 @@
-package Weather::OpenWeatherMap::Result::Forecast::Day;
+package Weather::OpenWeatherMap::Result::Forecast::Block;
 
 use strictures 2;
 
@@ -8,19 +8,10 @@ use List::Objects::Types  -all;
 
 use Weather::OpenWeatherMap::Units -all;
 
-use Moo; 
+use Moo; use MooX::late;
 
 use Storable 'freeze';
 
-# FIXME
-# move most of this to a Forecast::Block superclass
-#  add Forecast::Day, Forecast::Hour subclasses
-#  figure out diffs between ::Day and ::Hour reports
-#  construct appropiate obj in Result::Forecast->_forecast_list
-
-my $CoercedInt = Int->plus_coercions(StrictNum, sub { int });
-
-# shareable in parent class:
 has dt => (
   is        => 'ro',
   isa       => DateTimeUTC,
@@ -36,7 +27,7 @@ has pressure => (
 
 has humidity => (
   is        => 'ro',
-  isa       => $CoercedInt,
+  isa       => CoercedInt,
   coerce    => 1,
   builder   => sub { 0 },
 );
@@ -83,63 +74,6 @@ has wind_direction_degrees => (
   coerce    => 1,
   builder   => sub { 0 },
 );
-
-{ package
-    Weather::OpenWeatherMap::Result::Forecast::Day::Temps;
-  use strict; use warnings FATAL => 'all';
-  use Moo;
-  has [qw/ morn night eve min max day /], 
-    ( is => 'ro', default => sub { 0 } );
-}
-
-# FIXME current temp in Hour, obj in Day:
-has temp => (
-  is        => 'ro',
-  isa       => (InstanceOf[__PACKAGE__.'::Temps'])
-    ->plus_coercions( HashRef,
-      sub { 
-        Weather::OpenWeatherMap::Result::Forecast::Day::Temps->new(%$_)
-      },
-  ),
-  coerce    => 1,
-  builder   => sub {
-    Weather::OpenWeatherMap::Result::Forecast::Day::Temps->new
-  },
-);
-
-has temp_min_f => (
-  lazy      => 1,
-  is        => 'ro',
-  isa       => CoercedInt,
-  coerce    => 1,
-  builder   => sub { shift->temp->min },
-);
-
-has temp_max_f => (
-  lazy      => 1,
-  is        => 'ro',
-  isa       => CoercedInt,
-  coerce    => 1,
-  builder   => sub { shift->temp->max },
-);
-
-has temp_min_c => (
-  lazy      => 1,
-  is        => 'ro',
-  isa       => CoercedInt,
-  coerce    => 1,
-  builder   => sub { f_to_c shift->temp_min_f },
-);
-
-has temp_max_c => (
-  lazy      => 1,
-  is        => 'ro',
-  isa       => CoercedInt,
-  coerce    => 1,
-  builder   => sub { f_to_c shift->temp_max_f },
-);
-
-# FIXME these are share-able in parent class:
 
 has _weather_list => (
   init_arg  => 'weather',
