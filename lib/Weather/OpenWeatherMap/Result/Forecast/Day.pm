@@ -9,37 +9,10 @@ use List::Objects::Types  -all;
 use Weather::OpenWeatherMap::Units -all;
 
 use Moo; 
+extends 'Weather::OpenWeatherMap::Result::Forecast::Block';
 
 use Storable 'freeze';
 
-# FIXME
-# move most of this to a Forecast::Block superclass
-#  add Forecast::Day, Forecast::Hour subclasses
-#  figure out diffs between ::Day and ::Hour reports
-#  construct appropiate obj in Result::Forecast->_forecast_list
-
-my $CoercedInt = Int->plus_coercions(StrictNum, sub { int });
-
-# shareable in parent class:
-has dt => (
-  is        => 'ro',
-  isa       => DateTimeUTC,
-  coerce    => 1,
-  builder   => sub { 0 },
-);
-
-has pressure => (
-  is        => 'ro',
-  isa       => StrictNum,
-  builder   => sub { 0 },
-);
-
-has humidity => (
-  is        => 'ro',
-  isa       => $CoercedInt,
-  coerce    => 1,
-  builder   => sub { 0 },
-);
 
 # FIXME is this still correct? looks to be a HASH in hourly reports,
 #   need to check on daily
@@ -92,7 +65,6 @@ has wind_direction_degrees => (
     ( is => 'ro', default => sub { 0 } );
 }
 
-# FIXME current temp in Hour, obj in Day:
 has temp => (
   is        => 'ro',
   isa       => (InstanceOf[__PACKAGE__.'::Temps'])
@@ -138,53 +110,6 @@ has temp_max_c => (
   coerce    => 1,
   builder   => sub { f_to_c shift->temp_max_f },
 );
-
-# FIXME these are share-able in parent class:
-
-has _weather_list => (
-  init_arg  => 'weather',
-  is        => 'ro',
-  isa       => ArrayObj,
-  coerce    => 1,
-  builder   => sub { [] },
-);
-
-has _first_weather_item => (
-  lazy      => 1,
-  is        => 'ro',
-  isa       => HashRef,
-  builder   => sub { shift->_weather_list->[0] || +{} },
-);
-
-has conditions_terse => (
-  lazy      => 1,
-  is        => 'ro',
-  isa       => Str,
-  builder   => sub { shift->_first_weather_item->{main} // '' },
-);
-
-has conditions_verbose => (
-  lazy      => 1,
-  is        => 'ro',
-  isa       => Str,
-  builder   => sub { shift->_first_weather_item->{description} // '' },
-);
-
-has conditions_code => (
-  lazy      => 1,
-  is        => 'ro',
-  isa       => Int,
-  builder   => sub { shift->_first_weather_item->{id} // 0 },
-);
-
-has conditions_icon => (
-  lazy      => 1,
-  is        => 'ro',
-  isa       => Maybe[Str],
-  builder   => sub { shift->_first_weather_item->{icon} },
-);
-
-
 
 1;
 
