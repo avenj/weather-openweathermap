@@ -117,8 +117,11 @@ sub get_weather {
     $result = Weather::OpenWeatherMap::Result->new_for(
       $type =>
         request => $my_request,
-        json    => $http_response->content
-        # FIXME pass ->hourly if request isa Forecast and $my_request->hourly
+        json    => $http_response->content,
+        (
+          $my_request->can('hourly') && $my_request->hourly ?
+            (hourly => 1) : ()
+        ),
     );
   }
 
