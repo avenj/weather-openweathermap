@@ -56,8 +56,7 @@ sub make_path {
       last TYPE
     }
     if ($obj->isa('Weather::OpenWeatherMap::Request::Forecast')) {
-      # FIXME check if $req->hourly or not, 'F' or 'H' prefix
-      $fname .= 'F';
+      $fname .= $obj->hourly ? 'H' : 'F';
       last TYPE
     }
     if ($obj->isa('Weather::OpenWeatherMap::Request::Find')) {
