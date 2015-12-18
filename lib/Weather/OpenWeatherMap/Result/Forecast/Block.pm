@@ -32,48 +32,6 @@ has humidity => (
   builder   => sub { 0 },
 );
 
-# FIXME is this still correct? looks to be a HASH in hourly reports,
-#   need to check on daily
-has cloud_coverage => (
-  init_arg  => 'clouds',
-  is        => 'ro',
-  isa       => CoercedInt,
-  coerce    => 1,
-  builder   => sub { 0 },
-);
-
-# FIXME is this still correct? looks to be a HASH in hourly reports,
-#    need to check on daily
-has wind_speed_mph => (
-  init_arg  => 'speed',
-  is        => 'ro',
-  isa       => CoercedInt,
-  coerce    => 1,
-  builder   => sub { 0 },
-);
-
-has wind_speed_kph => (
-  lazy      => 1,
-  is        => 'ro',
-  isa       => CoercedInt,
-  coerce    => 1,
-  builder   => sub { mph_to_kph shift->wind_speed_mph },
-);
-
-has wind_direction => (
-  lazy      => 1,
-  is        => 'ro',
-  isa       => Str,
-  builder   => sub { deg_to_compass shift->wind_direction_degrees },
-);
-
-has wind_direction_degrees => (
-  init_arg  => 'deg',
-  is        => 'ro',
-  isa       => CoercedInt,
-  coerce    => 1,
-  builder   => sub { 0 },
-);
 
 has _weather_list => (
   init_arg  => 'weather',
@@ -89,6 +47,8 @@ has _first_weather_item => (
   isa       => HashRef,
   builder   => sub { shift->_weather_list->[0] || +{} },
 );
+
+# FIXME are these correct for both ?
 
 has conditions_terse => (
   lazy      => 1,
@@ -118,7 +78,7 @@ has conditions_icon => (
   builder   => sub { shift->_first_weather_item->{icon} },
 );
 
-
+# FIXME POD, tests
 
 1;
 

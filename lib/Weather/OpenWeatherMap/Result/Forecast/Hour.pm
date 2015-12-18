@@ -13,6 +13,10 @@ extends 'Weather::OpenWeatherMap::Result::Forecast::Block';
 
 use Storable 'freeze';
 
+# FIXME cloud_coverage (HASH?)
+
+# FIXME wind_speech_* (see Day) (HASH?)
+
 # FIXME
 
 1;
