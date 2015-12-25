@@ -104,11 +104,27 @@ has dt_txt => (
 );
 
 has temp => (
-  init_arg  => undef,
+  lazy      => 1,
   is        => 'ro',
   isa       => CoercedInt,
   coerce    => 1,
   builder   => sub { shift->_main->{temp} },
+);
+
+has humidity => (
+  lazy      => 1,
+  is        => 'ro',
+  isa       => CoercedInt,
+  coerce    => 1,
+  builder   => sub { shift->_main->{humidity} },
+);
+
+has pressure => (
+  lazy      => 1,
+  is        => 'ro',
+  isa       => StrictNum,
+  coerce    => 1,
+  builder   => sub { shift->_main->{pressure} },
 );
 
 # FIXME POD + tests

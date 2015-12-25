@@ -13,12 +13,24 @@ extends 'Weather::OpenWeatherMap::Result::Forecast::Block';
 
 use Storable 'freeze';
 
-
 has cloud_coverage => (
   init_arg  => 'clouds',
   is        => 'ro',
   isa       => CoercedInt,
   coerce    => 1,
+  builder   => sub { 0 },
+);
+
+has humidity => (
+  is        => 'ro',
+  isa       => CoercedInt,
+  coerce    => 1,
+  builder   => sub { 0 },
+);
+
+has pressure => (
+  is        => 'ro',
+  isa       => StrictNum,
   builder   => sub { 0 },
 );
 

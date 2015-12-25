@@ -8,6 +8,7 @@ use List::Objects::Types  -all;
 
 use Weather::OpenWeatherMap::Units -all;
 
+# FIXME make me a role that requires the core set of methods
 use Moo; use MooX::late;
 
 use Storable 'freeze';
@@ -18,21 +19,6 @@ has dt => (
   coerce    => 1,
   builder   => sub { 0 },
 );
-
-# FIXME pressure/humidity are under main for Forecast::Hour
-has pressure => (
-  is        => 'ro',
-  isa       => StrictNum,
-  builder   => sub { 0 },
-);
-
-has humidity => (
-  is        => 'ro',
-  isa       => CoercedInt,
-  coerce    => 1,
-  builder   => sub { 0 },
-);
-
 
 has _weather_list => (
   init_arg  => 'weather',
