@@ -23,6 +23,7 @@ has _main => (
 
 has _wind => (
   init_arg    => 'wind',
+  lazy        => 1,
   is          => 'ro',
   isa         => HashObj,
   coerce      => 1,
@@ -31,20 +32,75 @@ has _wind => (
   },
 );
 
-has _snow => (
-  init_arg    => 'snow',
+has wind_speed_mph => (
+  lazy        => 1,
+  is          => 'ro',
+  isa         => CoercedInt,
+  coerce      => 1,
+  builder     => sub { shift->_wind->{speed} // 0 },
+);
+
+has wind_speed_kph => (
+  lazy        => 1,
+  is          => 'ro',
+  isa         => CoercedInt,
+  coerce      => 1,
+  builder     => sub { mph_to_kph shift->wind_speed_mph },
+);
+
+has wind_direction => (
+  lazy        => 1,
+  is          => 'ro',
+  isa         => Str,
+  builder     => sub { deg_to_compass shift->wind_direction_degrees },
+);
+
+has wind_direction_degrees => (
+  lazy        => 1,
+  is          => 'ro',
+  isa         => CoercedInt,
+  coerce      => 1,
+  builder     => sub { shift->_wind->{deg} // 0 },
+);
+
+has _clouds => (
+  init_arg    => 'clouds',
+  lazy        => 1,
   is          => 'ro',
   isa         => HashObj,
   coerce      => 1,
-  builder     => sub { +{} },
+  builder     => sub { +{ all => 0 } },
 );
+
+sub cloud_coverage { shift->_clouds->{all} // 0 }
+
+has _snow => (
+  init_arg    => 'snow',
+  lazy        => 1,
+  is          => 'ro',
+  isa         => HashObj,
+  coerce      => 1,
+  builder     => sub { +{ '3h' => 0 } },
+);
+
+sub snow { shift->_snow->{3h} // 0 }
 
 has _rain => (
   init_arg    => 'rain',
+  lazy        => 1,
   is          => 'ro',
   isa         => HashObj,
   coerce      => 1,
-  builder     => sub { +{} },
+  builder     => sub { +{ '3h' => 0 } },
+);
+
+sub rain { shift->_rain->{3h} // 0 }
+
+has dt_txt => (
+  lazy        => 1,
+  is          => 'ro',
+  isa         => Str,
+  builder     => sub { '' }, 
 );
 
 has temp => (
@@ -54,10 +110,6 @@ has temp => (
   coerce    => 1,
   builder   => sub { shift->_main->{temp} },
 );
-
-# FIXME rain / snow / wind accessors
-
-# FIXME cloud_coverage (HASH?)
 
 # FIXME POD + tests
 
