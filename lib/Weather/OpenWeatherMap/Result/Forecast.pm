@@ -7,6 +7,7 @@ use Types::Standard      -all;
 use List::Objects::Types -all;
 
 use Weather::OpenWeatherMap::Result::Forecast::Day;
+use Weather::OpenWeatherMap::Result::Forecast::Hour;
 
 =pod
 
