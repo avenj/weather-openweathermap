@@ -8,7 +8,6 @@ use List::Objects::Types  -all;
 
 use Weather::OpenWeatherMap::Units -all;
 
-# FIXME make me a role that requires the core set of methods
 use Moo; use MooX::late;
 
 use Storable 'freeze';

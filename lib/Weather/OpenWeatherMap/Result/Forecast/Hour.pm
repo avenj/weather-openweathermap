@@ -113,7 +113,7 @@ has _snow => (
   builder     => sub { +{ '3h' => 0 } },
 );
 
-sub snow { shift->_snow->{3h} // 0 }
+sub snow { shift->_snow->{'3h'} // 0 }
 
 has _rain => (
   init_arg    => 'rain',
@@ -124,7 +124,7 @@ has _rain => (
   builder     => sub { +{ '3h' => 0 } },
 );
 
-sub rain { shift->_rain->{3h} // 0 }
+sub rain { shift->_rain->{'3h'} // 0 }
 
 # FIXME POD + tests
 
