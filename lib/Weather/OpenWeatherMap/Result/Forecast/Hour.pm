@@ -26,6 +26,31 @@ has _main => (
   coerce      => 1,
 );
 
+has temp => (
+  lazy      => 1,
+  is        => 'ro',
+  isa       => CoercedInt,
+  coerce    => 1,
+  builder   => sub { shift->_main->{temp} },
+);
+
+has humidity => (
+  lazy      => 1,
+  is        => 'ro',
+  isa       => CoercedInt,
+  coerce    => 1,
+  builder   => sub { shift->_main->{humidity} },
+);
+
+has pressure => (
+  lazy      => 1,
+  is        => 'ro',
+  isa       => StrictNum,
+  coerce    => 1,
+  builder   => sub { shift->_main->{pressure} },
+);
+
+
 has _wind => (
   init_arg    => 'wind',
   lazy        => 1,
@@ -100,37 +125,6 @@ has _rain => (
 );
 
 sub rain { shift->_rain->{3h} // 0 }
-
-has dt_txt => (
-  lazy        => 1,
-  is          => 'ro',
-  isa         => Str,
-  builder     => sub { '' }, 
-);
-
-has temp => (
-  lazy      => 1,
-  is        => 'ro',
-  isa       => CoercedInt,
-  coerce    => 1,
-  builder   => sub { shift->_main->{temp} },
-);
-
-has humidity => (
-  lazy      => 1,
-  is        => 'ro',
-  isa       => CoercedInt,
-  coerce    => 1,
-  builder   => sub { shift->_main->{humidity} },
-);
-
-has pressure => (
-  lazy      => 1,
-  is        => 'ro',
-  isa       => StrictNum,
-  coerce    => 1,
-  builder   => sub { shift->_main->{pressure} },
-);
 
 # FIXME POD + tests
 
