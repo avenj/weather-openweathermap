@@ -19,6 +19,7 @@ has dt => (
   builder   => sub { 0 },
 );
 
+# FIXME pressure/humidity are under main for Forecast::Hour
 has pressure => (
   is        => 'ro',
   isa       => StrictNum,
@@ -48,7 +49,6 @@ has _first_weather_item => (
   builder   => sub { shift->_weather_list->[0] || +{} },
 );
 
-# FIXME are these correct for both ?
 
 has conditions_terse => (
   lazy      => 1,
