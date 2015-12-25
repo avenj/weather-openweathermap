@@ -11,7 +11,12 @@ use Weather::OpenWeatherMap::Units -all;
 use Moo; use MooX::late;
 extends 'Weather::OpenWeatherMap::Result::Forecast::Block';
 
-use Storable 'freeze';
+has dt_txt => (
+  lazy        => 1,
+  is          => 'ro',
+  isa         => Str,
+  builder     => sub { '' }, 
+);
 
 has _main => (
   init_arg    => 'main',

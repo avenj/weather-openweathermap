@@ -11,8 +11,6 @@ use Weather::OpenWeatherMap::Units -all;
 use Moo; 
 extends 'Weather::OpenWeatherMap::Result::Forecast::Block';
 
-use Storable 'freeze';
-
 has cloud_coverage => (
   init_arg  => 'clouds',
   is        => 'ro',
