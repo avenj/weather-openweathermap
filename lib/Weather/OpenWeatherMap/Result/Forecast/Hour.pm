@@ -8,9 +8,8 @@ use List::Objects::Types -all;
 
 use Weather::OpenWeatherMap::Units -all;
 
-use Moo; use MooX::late;
 
-extends 'Weather::OpenWeatherMap::Result::Forecast::Block';
+use Moo;
 
 has dt_txt => (
   lazy        => 1,
@@ -125,7 +124,9 @@ has _rain => (
 
 sub rain { shift->_rain->{'3h'} // 0 }
 
-# FIXME POD + tests
+
+with 'Weather::OpenWeatherMap::Result::Forecast::Block';
+
 
 1;
 

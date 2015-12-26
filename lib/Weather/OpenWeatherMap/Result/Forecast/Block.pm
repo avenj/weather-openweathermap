@@ -8,9 +8,20 @@ use List::Objects::Types  -all;
 
 use Weather::OpenWeatherMap::Units -all;
 
-use Moo; use MooX::late;
+
+use Moo::Role;
 
 use Storable 'freeze';
+
+requires qw/
+  cloud_coverage
+  humidity
+  pressure
+  wind_speed_mph
+  wind_speed_kph
+  wind_direction
+  wind_direction_degrees
+/;
 
 has dt => (
   is        => 'ro',

@@ -8,8 +8,8 @@ use List::Objects::Types  -all;
 
 use Weather::OpenWeatherMap::Units -all;
 
+
 use Moo; 
-extends 'Weather::OpenWeatherMap::Result::Forecast::Block';
 
 has cloud_coverage => (
   init_arg  => 'clouds',
@@ -116,6 +116,10 @@ has temp_max_c => (
   coerce    => 1,
   builder   => sub { f_to_c shift->temp_max_f },
 );
+
+
+with 'Weather::OpenWeatherMap::Result::Forecast::Block';
+
 
 1;
 
