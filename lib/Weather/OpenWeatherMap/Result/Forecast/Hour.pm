@@ -34,6 +34,14 @@ has temp => (
   builder   => sub { shift->_main->{temp} },
 );
 
+has temp_c => (
+  lazy      => 1,
+  is        => 'ro',
+  isa       => CoercedInt,
+  coerce    => 1,
+  builder   => sub { f_to_c shift->temp },
+);
+
 has humidity => (
   lazy      => 1,
   is        => 'ro',
