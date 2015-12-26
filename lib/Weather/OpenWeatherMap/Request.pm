@@ -13,7 +13,7 @@ use URI::Escape 'uri_escape_utf8';
 use Module::Runtime 'use_module';
 
 
-use namespace::clean; use Moo; use MooX::late;
+use Moo; 
 
 use Storable 'freeze';
 

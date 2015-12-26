@@ -10,7 +10,7 @@ use List::Objects::Types -all;
 use Weather::OpenWeatherMap::Result::Current;
 
 
-use Moo; use MooX::late;
+use Moo; 
 extends 'Weather::OpenWeatherMap::Result';
 
 

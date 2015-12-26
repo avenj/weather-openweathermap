@@ -22,7 +22,7 @@ require Weather::OpenWeatherMap::Result::Current;
 require Weather::OpenWeatherMap::Result::Forecast;
 
 
-use Moo; use MooX::late;
+use Moo; 
 
 =pod
 

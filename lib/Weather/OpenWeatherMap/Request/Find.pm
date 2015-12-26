@@ -4,7 +4,7 @@ use Carp;
 use URI::Escape 'uri_escape_utf8';
 use Types::Standard -all;
 
-use namespace::clean; use Moo;
+use Moo;
 extends 'Weather::OpenWeatherMap::Request';
 
 has max => (

@@ -8,7 +8,7 @@ use List::Objects::Types  -all;
 
 use Weather::OpenWeatherMap::Units -all;
 
-use Moo; use MooX::late;
+use Moo; 
 
 use Storable 'freeze';
 

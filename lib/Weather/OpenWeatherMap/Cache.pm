@@ -3,6 +3,8 @@ package Weather::OpenWeatherMap::Cache;
 use Carp;
 use strictures 2;
 
+use Scalar::Util 'blessed';
+
 use Storable ();
 use Time::HiRes ();
 
@@ -18,7 +20,7 @@ use List::Objects::Types  -all;
 use Types::Path::Tiny     -all;
 
 
-use namespace::clean; use Moo; use MooX::late;
+use Moo; 
 
 
 has dir => (

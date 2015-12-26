@@ -5,7 +5,7 @@ use Carp;
 
 use Types::Standard -all;
 
-use namespace::clean; use Moo; use MooX::late;
+use Moo; 
 
 with 'StackTrace::Auto';
 
