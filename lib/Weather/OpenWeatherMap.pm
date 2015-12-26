@@ -117,7 +117,11 @@ sub get_weather {
     $result = Weather::OpenWeatherMap::Result->new_for(
       $type =>
         request => $my_request,
-        json    => $http_response->content
+        json    => $http_response->content,
+        (
+          $my_request->can('hourly') && $my_request->hourly ?
+            (hourly => 1) : ()
+        ),
     );
   }
 

@@ -17,7 +17,7 @@ use Storable 'freeze';
 sub new_for {
   my ($class, $type) = splice @_, 0, 2;
   confess "Expected a subclass type" unless $type;
-  my $subclass = $class .'::'. ucfirst($type);
+  my $subclass = join '::', $class, map ucfirst, split '::', $type;
   use_module($subclass)->new(@_)
 }
 
