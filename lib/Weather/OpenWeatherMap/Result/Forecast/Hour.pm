@@ -9,6 +9,7 @@ use List::Objects::Types -all;
 use Weather::OpenWeatherMap::Units -all;
 
 use Moo; use MooX::late;
+
 extends 'Weather::OpenWeatherMap::Result::Forecast::Block';
 
 has dt_txt => (
@@ -57,9 +58,7 @@ has _wind => (
   is          => 'ro',
   isa         => HashObj,
   coerce      => 1,
-  builder     => sub {
-    +{ speed => 0, deg => 0 }
-  },
+  builder     => sub { +{ speed => 0, deg => 0 } },
 );
 
 has wind_speed_mph => (
@@ -129,3 +128,47 @@ sub rain { shift->_rain->{'3h'} // 0 }
 # FIXME POD + tests
 
 1;
+
+=pod
+
+=head1 NAME
+
+Weather::OpenWeatherMap::Result::Forecast::Hour - Weather report for a 3hr block
+
+=head1 SYNOPSIS
+
+  # Usually retrieved via a Weather::OpenWeatherMap::Result::Forecast
+
+=head1 DESCRIPTION
+
+A L<Weather::OpenWeatherMap> weather forecast for a 3-hr block, provided by a
+L<Weather::OpenWeatherMap::Result::Forecast> hourly weather report.
+
+This class is a subclass of
+L<Weather::OpenWeatherMap::Result::Forecast::Block>.
+
+=head2 ATTRIBUTES
+
+FIXME
+
+=head1 SEE ALSO
+
+L<http://www.openweathermap.org/forecast5>
+
+L<Weather::OpenWeatherMap::Result>
+
+L<Weather::OpenWeatherMap::Result::Forecast>
+
+L<Weather::OpenWeatherMap::Result::Forecast::Block>
+
+L<Weather::OpenWeatherMap::Result::Forecast::Day>
+
+L<Weather::OpenWeatherMap::Result::Current>
+
+=head1 AUTHOR
+
+Jon Portnoy <avenj@cobaltirc.org>
+
+=cut
+
+

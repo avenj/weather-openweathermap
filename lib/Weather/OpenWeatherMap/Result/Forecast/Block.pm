@@ -63,117 +63,64 @@ has conditions_icon => (
   builder   => sub { shift->_first_weather_item->{icon} },
 );
 
-# FIXME POD, tests
-
 1;
 
 =pod
 
 =head1 NAME
 
-Weather::OpenWeatherMap::Result::Forecast::Day
+Weather::OpenWeatherMap::Result::Forecast::Block - Weather report for a block of time
 
 =head1 SYNOPSIS
 
-  # Usually retrived via a Weather::OpenWeatherMap::Result::Forecast
+  # Typically a parent class for objects produced by a
+  # Weather::OpenWeatherMap::Result::Forecast, one of:
+  #  Weather::OpenWeatherMap::Result::Forecast::Day
+  #  Weather::OpenWeatherMap::Result::Forecast::Hour
 
 =head1 DESCRIPTION
 
-A L<Weather::OpenWeatherMap> weather forecast for a single day.
+A L<Weather::OpenWeatherMap> weather forecast for a block of time; this is the
+parent class of L<Weather::OpenWeatherMap::Result::Forecast::Day> &
+L<Weather::OpenWeatherMap::Result::Forecast::Hour>.
 
 =head2 ATTRIBUTES
 
-=head3 Conditions
-
-=head4 cloud_coverage
-
-The forecast cloud coverage, as a percentage.
-
-=head4 conditions_terse
+=head3 conditions_terse
 
 The conditions category.
 
-=head4 conditions_verbose
+=head3 conditions_verbose
 
 The conditions description string.
 
-=head4 conditions_code
+=head3 conditions_code
 
 The L<OpenWeatherMap|http://www.openweathermap.org/> conditions code.
 
-=head4 conditions_icon
+=head3 conditions_icon
 
 The L<OpenWeatherMap|http://www.openweathermap.org/> conditions icon.
 
-=head4 dt
+=head3 dt
 
   my $date = $result->dt->mdy;
 
 A L<DateTime> object coerced from the timestamp attached to this forecast.
 
-=head4 humidity
-
-The forecast humidity, as a percentage.
-
-=head4 pressure
-
-The forecast atmospheric pressure, in hPa.
-
-=head3 Temperature
-
-=head4 temp
-
-An object containing the returned temperature data; this object provides
-B<morn>, B<night>, B<eve>, B<min>, B<max>, B<day> accessors.
-
-See L</temp_min_f>, L</temp_max_f>.
-
-=head4 temp_min_f
-
-The forecast low temperature, in degrees Fahrenheit.
-
-=head4 temp_max_f
-
-The forecast high temperature, in degrees Fahrenheit.
-
-=head4 temp_min_c
-
-The forecast low temperature, in degrees Celsius.
-
-=head4 temp_max_c
-
-The forecast high temperature, in degrees Celsius.
-
-=head3 Wind
-
-=head4 wind_speed_mph
-
-The forecast wind speed, in MPH.
-
-=head4 wind_speed_kph
-
-The forecast wind speed, in KPH.
-
-=head4 wind_direction
-
-The forecast wind direction, as a (inter-)cardinal direction in the set
-C<< [ N NNE NE ENE E ESE SE SSE S SSW SW WSW W WNW NW NNW ] >>
-
-=head4 wind_direction_degrees
-
-The forecast wind direction, in degrees azimuth.
-
 =head1 SEE ALSO
-
-L<http://www.openweathermap.org>
-
-L<Weather::OpenWeatherMap>
 
 L<Weather::OpenWeatherMap::Result>
 
 L<Weather::OpenWeatherMap::Result::Forecast>
 
+L<Weather::OpenWeatherMap::Result::Forecast::Day>
+
+L<Weather::OpenWeatherMap::Result::Forecast::Hour>
+
 L<Weather::OpenWeatherMap::Result::Current>
+
+L<http://www.openweathermap.org>
 
 =head1 AUTHOR
 
