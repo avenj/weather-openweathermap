@@ -58,7 +58,6 @@ has pressure => (
   builder   => sub { shift->_main->{pressure} },
 );
 
-
 has _wind => (
   init_arg    => 'wind',
   lazy        => 1,
@@ -153,12 +152,32 @@ Weather::OpenWeatherMap::Result::Forecast::Hour - Weather report for a 3hr block
 A L<Weather::OpenWeatherMap> weather forecast for a 3-hr block, provided by a
 L<Weather::OpenWeatherMap::Result::Forecast> hourly weather report.
 
-This class is a subclass of
-L<Weather::OpenWeatherMap::Result::Forecast::Block>.
+This class consumes L<Weather::OpenWeatherMap::Result::Forecast::Block>; look
+there for other applicable methods and attributes.
 
 =head2 ATTRIBUTES
 
-FIXME
+=head3 dt_txt
+
+A textual representation of the date/time for this forecast block.
+
+See also: L<Weather::OpenWeatherMap::Result::Forecast::Block/dt>
+
+=head3 temp
+
+The predicted temperature (in Fahrenheit).
+
+=head3 temp_c
+
+The predicted temperature (in Celsius).
+
+=head3 snow
+
+The predicted amount of snow (in inches), if applicable.
+
+=head3 rain
+
+The predicted amount of rain (in inches), if applicable.
 
 =head1 SEE ALSO
 
