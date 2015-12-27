@@ -7,7 +7,8 @@ with 'Testing::Request';
 has rx_base => (
   is      => 'ro',
   builder => sub { 
-    '^http://api\.openweathermap\.org/data/2\.5/forecast/daily\?' 
+    my ($self) = @_;
+    '^http://api\.openweathermap\.org/data/2\.5/forecast/'
   },
 );
 
@@ -19,30 +20,36 @@ test 'forecast default days' => sub {
 test 'forecast request url by name' => sub {
   my ($self) = @_;
   my $re = $self->rx_base 
+            . $self->request_obj->hourly ? '' : 'daily\?'
             . 'q=\S+&units='
             . $self->request_obj->_units
             . '&cnt='
             . $self->request_obj->days;
+  diag $self->request_obj->url;
   cmp_ok $self->request_obj->url, '=~', $re, 'by name';
 };
 
 test 'forecast request url by coord' => sub {
   my ($self) = @_;
   my $re = $self->rx_base 
+            . $self->request_obj_bycoord->hourly ? '' : 'daily\?'
             . 'lat=\S+&lon=\S+&units='
             . $self->request_obj_bycoord->_units
             . '&cnt='
             . $self->request_obj_bycoord->days;
+  diag $self->request_obj_bycoord->url;
   cmp_ok $self->request_obj_bycoord->url, '=~', $re, 'by coord';
 };
 
 test 'forecast request url by code' => sub {
   my ($self) = @_;
   my $re = $self->rx_base 
+            . $self->request_obj_bycode->hourly ? '' : 'daily\?'
             . 'id=\d+&units='
             . $self->request_obj_bycode->_units
             . '&cnt='
             . $self->request_obj_bycode->days;
+  diag $self->request_obj_bycode->url;
   cmp_ok $self->request_obj_bycode->url, '=~', $re, 'by code';
 };
 
