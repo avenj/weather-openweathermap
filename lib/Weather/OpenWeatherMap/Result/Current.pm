@@ -300,16 +300,18 @@ The wind direction, in degrees azimuth.
 
 =head1 SEE ALSO
 
-L<http://www.openweathermap.org>
-
-L<Weather::OpenWeatherMap>
+L<http://www.openweathermap.org/current>
 
 L<Weather::OpenWeatherMap::Result>
 
 L<Weather::OpenWeatherMap::Result::Forecast>
 
+L<Weather::OpenWeatherMap::Request>
+
 =head1 AUTHOR
 
 Jon Portnoy <avenj@cobaltirc.org>
+
+Licensed under the same terms as Perl.
 
 =cut

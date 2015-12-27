@@ -21,7 +21,6 @@ use Weather::OpenWeatherMap::Result;
 require Weather::OpenWeatherMap::Result::Current;
 require Weather::OpenWeatherMap::Result::Forecast;
 
-
 use Moo; 
 
 =pod
@@ -158,14 +157,15 @@ Weather::OpenWeatherMap - Interface to the OpenWeatherMap API
   );
 
   # Current conditions:
+  # (see Weather::OpenWeatherMap::Result::Current)
   my $current = $wx->get_weather(
     location => 'Manchester, NH',
   );
   my $tempf = $current->temp_f;
   my $wind  = $current->wind_speed_mph;
-  # (see Weather::OpenWeatherMap::Result::Current)
 
-  # Forecast conditions:
+  # Daily forecast conditions:
+  # (see Weather::OpenWeatherMap::Result::Forecast)
   my $forecast = $wx->get_weather(
     location => 'Manchester, NH',
     forecast => 1,
@@ -177,9 +177,22 @@ Weather::OpenWeatherMap - Interface to the OpenWeatherMap API
     my $temp_hi = $day->temp_max_f,
     # (see Weather::OpenWeatherMap::Result::Forecast::Day)
   }
-  # (see Weather::OpenWeatherMap::Result::Forecast)
+
+  # Hourly (3-hr blocks) forecast conditions:
+  my $forecast = $wx->get_weather(
+    location => 'Manchester, NH',
+    forecast => 1,
+    hourly   => 1,
+    days     => 3,
+  );
+  for my $block ($forecast->list) {
+    my $time = $block->dt_txt;
+    my $temp = $block->temp;
+    # (see Weather::OpenWeatherMap::Result::Forecast::Hour)
+  }
 
   # Find a city:
+  # (see Weather::OpenWeatherMap::Result::Find)
   my $search = $wx->get_weather(
     location => 'Manchester',
     find     => 1,
@@ -189,7 +202,6 @@ Weather::OpenWeatherMap - Interface to the OpenWeatherMap API
     my $region = $place->country;
     # ...
   }
-  # (see Weather::OpenWeatherMap::Result::Find)
 
 =head1 DESCRIPTION
 
@@ -261,8 +273,12 @@ control LWP options:
     # omit or set to false for current weather:
     forecast => 1,
 
+    # If 'forecast' is true, you can ask for an hourly (rather than daily)
+    # forecast report:
+    hourly => 1,
+
     # If 'forecast' is true, you can specify the number of days to fetch
-    # (up to 14):
+    # (up to 16 for daily reports, 5 for hourly reports):
     days => 3,
 
     # Optional tag for identifying the response to this request:
@@ -283,7 +299,7 @@ L<Weather::OpenWeatherMap::Result::Current>).
 If passed C<< forecast => 1 >>, requests a weather forecast (see
 L<Weather::OpenWeatherMap::Request::Forecast> and
 L<Weather::OpenWeatherMap::Result::Forecast>), in which case C<< days =>
-$count >> can be specified (up to 14).
+$count >> and/or C<< hourly => $bool >> can be specified.
 
 If passed C<< find => 1 >>, requests search results for a given location name
 or latitude & longitude; see L<Weather::OpenWeatherMap::Request::Find> and
@@ -301,5 +317,3 @@ L<POEx::Weather::OpenWeatherMap>
 Jon Portnoy <avenj@cobaltirc.org>
 
 =cut
-
-# vim: ts=2 sw=2 et sts=2 ft=perl

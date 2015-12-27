@@ -172,13 +172,13 @@ Serialization wrapper for use by subclasses.
 
 L<http://www.openweathermap.org/api>
 
-L<Weather::OpenWeatherMap>
-
 L<Weather::OpenWeatherMap::Result::Current>
 
 L<Weather::OpenWeatherMap::Result::Forecast>
 
 L<Weather::OpenWeatherMap::Result::Find>
+
+L<Weather::OpenWeatherMap::Request>
 
 =head1 AUTHOR
 

@@ -220,6 +220,8 @@ L<Weather::OpenWeatherMap::Request::Forecast>
 
 L<Weather::OpenWeatherMap::Request::Find>
 
+L<Weather::OpenWeatherMap::Result>
+
 =head1 AUTHOR
 
 Jon Portnoy <avenj@cobaltirc.org>

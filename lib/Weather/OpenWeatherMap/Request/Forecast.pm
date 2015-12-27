@@ -71,13 +71,24 @@ request.
 
 =head3 days
 
-The number of days to ask for (up to 16).
+The number of days to ask for (up to 16 for daily reports; up to 5 if
+L</hourly> is true).
 
 =head3 hourly
 
-Request an hourly (well, 3-hour blocks, really) forecast.
+Request an hourly (actually 3-hour blocks) forecast.
 
-(By default, a daily report is requested.)
+By default, a daily report is requested.
+
+=head1 SEE ALSO
+
+L<Weather::OpenWeatherMap::Request>
+
+L<Weather::OpenWeatherMap::Result>
+
+L<Weather::OpenWeatherMap::Result::Forecast>
+
+L<Weather::OpenWeatherMap>
 
 =head1 AUTHOR
 
