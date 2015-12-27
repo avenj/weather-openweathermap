@@ -42,7 +42,7 @@ has mock_json => (
 
 
 use lib 't/inc';
-with 'Testing::Result::Forecast';
+with 'Testing::Result::Forecast::Daily';
 run_me;
 
 

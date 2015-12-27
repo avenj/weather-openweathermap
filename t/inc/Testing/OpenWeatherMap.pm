@@ -8,8 +8,9 @@ package Testing::OpenWeatherMap;
 { package Testing::OWM::Forecast;
   use Test::Roo;
   has [qw/request_obj result_obj mock_json/] => ( is => 'ro' );
-  with 'Testing::Result::Forecast';
+  with 'Testing::Result::Forecast::Daily';
 }
+# FIXME hourly forecast from here also
 
 use Weather::OpenWeatherMap;
 use Weather::OpenWeatherMap::Test;

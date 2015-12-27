@@ -36,6 +36,11 @@ sub get_test_data {
       last DTYPE
     }
 
+    if ($type eq 'hourly') {
+      $path = dist_file($base, 'hourly.json');
+      last DTYPE
+    }
+
     if ($type eq 'failure' || $type eq 'error') {
       $path = dist_file($base, 'failure.json');
       last DTYPE

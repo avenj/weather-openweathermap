@@ -1,4 +1,4 @@
-package Testing::Result::Forecast;
+package Testing::Result::Forecast::Daily;
 
 use Test::Roo::Role;
 with 'Testing::Result';

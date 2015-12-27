@@ -25,7 +25,7 @@ test 'forecast request url by name' => sub {
             . $self->request_obj->_units
             . '&cnt='
             . $self->request_obj->days;
-  diag $self->request_obj->url;
+  note $self->request_obj->url;
   cmp_ok $self->request_obj->url, '=~', $re, 'by name';
 };
 
@@ -37,7 +37,7 @@ test 'forecast request url by coord' => sub {
             . $self->request_obj_bycoord->_units
             . '&cnt='
             . $self->request_obj_bycoord->days;
-  diag $self->request_obj_bycoord->url;
+  note $self->request_obj_bycoord->url;
   cmp_ok $self->request_obj_bycoord->url, '=~', $re, 'by coord';
 };
 
@@ -49,7 +49,7 @@ test 'forecast request url by code' => sub {
             . $self->request_obj_bycode->_units
             . '&cnt='
             . $self->request_obj_bycode->days;
-  diag $self->request_obj_bycode->url;
+  note $self->request_obj_bycode->url;
   cmp_ok $self->request_obj_bycode->url, '=~', $re, 'by code';
 };
 

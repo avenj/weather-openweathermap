@@ -11,8 +11,9 @@ use Weather::OpenWeatherMap::Cache;
 { package Testing::Result::Cachable::Forecast;
   use Test::Roo;
   has [qw/request_obj result_obj mock_json/] => ( is => 'ro' );
-  with 'Testing::Result::Forecast';
+  with 'Testing::Result::Forecast::Daily';
 }
+# FIXME hourly forecast test from here also
 
 { package Testing::Result::Cachable::Find;
   use Test::Roo;
