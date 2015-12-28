@@ -26,6 +26,8 @@ test 'list operations' => sub {
     isa_ok $v, 'Weather::OpenWeatherMap::Result::Current'
   }
   cmp_ok $cnt, '==', 2, 'iter';
+  $itr = $res->iter(2);
+  cmp_ok @{[$itr->()]}, '==', '2', 'iter($n)';
 };
 
 test 'list items' => sub {

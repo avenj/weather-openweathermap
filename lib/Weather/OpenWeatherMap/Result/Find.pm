@@ -49,8 +49,10 @@ has _list => (
 sub count    { shift->_list->count }
 sub list     { shift->_list->all }
 sub as_array { array(shift->_list->all) }
-# FIXME take a $count arg like Forecast->iter
-sub iter     { shift->_list->natatime(1) }
+sub iter {
+  my ($self, $count) = @_;
+  $self->_list->natatime($count || 1)
+}
 
 
 1;
