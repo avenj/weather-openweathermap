@@ -73,18 +73,28 @@ test 'dt' => sub {
 test 'atmospheric' => sub {
   my ($self) = @_;
 
+  cmp_ok $self->first->cloud_coverage, '==', 92,
+    'cloud_coverage';
   cmp_ok $self->first->pressure, 'eq', '1002.83',
-    'pressure ok';
+    'pressure';
   cmp_ok $self->first->humidity, '==', 91,
-    'humidity ok';
+    'humidity';
 };
 
 test 'conditions' => sub {
   my ($self) = @_;
 
   cmp_ok $self->first->temp, '==', 33,
-    'temp ok';
-  # FIXME conditions_*
+    'temp';
+
+  cmp_ok $self->first->conditions_terse, 'eq', 'Snow',
+    'conditions_terse';
+  cmp_ok $self->first->conditions_verbose, 'eq', 'snow',
+    'conditions_verbose';
+  cmp_ok $self->first->conditions_code, 'eq', '601',
+    'conditions_code';
+  cmp_ok $self->first->conditions_icon, 'eq', '13n',
+    'conditions_icon';
 };
 
 test 'precipitation' => sub {
@@ -99,7 +109,15 @@ test 'precipitation' => sub {
 
 test 'wind' => sub {
   my ($self) = @_;
-  # FIXME
+
+  cmp_ok $self->first->wind_speed_mph, '==', 11,
+    'wind_speed_mph';
+  cmp_ok $self->first->wind_speed_kph, '==', 17,
+    'wind_speed_kph';
+  cmp_ok $self->first->wind_direction, 'eq', 'WSW',
+    'wind_direction';
+  cmp_ok $self->first->wind_direction_degrees, '==', 241,
+    'wind_direction_degrees';
 };
 
 1;
