@@ -48,7 +48,7 @@ sub as_string {
 
 =head1 NAME
 
-Weather::OpenWeatherMap::Error
+Weather::OpenWeatherMap::Error - Internal and API error objects
 
 =head1 SYNOPSIS
 
@@ -57,8 +57,8 @@ Weather::OpenWeatherMap::Error
 =head1 DESCRIPTION
 
 These objects contain information on internal or backend (API) errors; they
-are generally emitted to subscribed sessions by
-L<Weather::OpenWeatherMap> in response to a failed request.
+are generally thrown by L<Weather::OpenWeatherMap> or emitted by
+L<POEx::Weather::OpenWeatherMap> in response to a failed request.
 
 These objects overload stringification (see L</as_string>).
 
