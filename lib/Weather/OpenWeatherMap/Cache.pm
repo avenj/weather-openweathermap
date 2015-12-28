@@ -50,6 +50,7 @@ sub make_path {
     unless blessed($obj) and $obj->isa('Weather::OpenWeatherMap::Request');
 
   my $fname = 'W';
+  # also see cache_paths
   TYPE: {
     if ($obj->isa('Weather::OpenWeatherMap::Request::Current')) {
       $fname .= 'C';
@@ -145,7 +146,7 @@ sub expire {
 
 sub cache_paths {
   my ($self) = @_;
-  $self->dir->children( qr/^W(?:C|F).+\.wx/ )
+  $self->dir->children( qr/^W(?:[CHFS]).+\.wx/ )
 }
 
 sub expire_all {

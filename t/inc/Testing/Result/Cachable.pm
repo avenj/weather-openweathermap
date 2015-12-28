@@ -190,10 +190,16 @@ test 'cache clear' => sub {
   my $forecast = $self->forecast_result_generator->();
   isa_ok $forecast, 'Weather::OpenWeatherMap::Result::Forecast';
 
-  $cache->cache($current, $forecast);
-  cmp_ok $cache->clear, '==', 2, 'clear removed 2 items';
+  my $hourly = $self->hourly_result_generator->();
+  isa_ok $hourly, 'Weather::OpenWeatherMap::Result::Forecast';
+
+  $cache->cache($current, $forecast, $hourly);
+  note "Cache paths: " . join ', ', $cache->cache_paths;
+
+  cmp_ok $cache->clear, '==', 3, 'clear removed 3 items';
   ok !$cache->retrieve($current->request), 'current no longer cached';
   ok !$cache->retrieve($forecast->request), 'forecast no longer cached';
+  ok !$cache->retrieve($hourly->request), 'hourly forecast no longer cached';
 };
 
 
