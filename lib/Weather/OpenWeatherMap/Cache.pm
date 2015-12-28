@@ -162,6 +162,10 @@ sub expire {
   return unless $ref;
 
   my ($ts) = @$ref;
+  unless ($ts) {
+    warn "expiring possibly corrupt cachefile: $path";
+    return $path->remove
+  }
   return $path->remove if Time::HiRes::time - $ts > $self->expiry;
   ()
 }
