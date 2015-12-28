@@ -62,7 +62,6 @@ has _forecast_list => ( lazy_for ArrayObj,
     warn "No items in forecast list (name: @{[$self->name]})"
       unless @list;
     # FIXME test that bad items in @list warn and add nothing
-    # FIXME POD
     $self->request->hourly ?
       [ map {;
         ref $_ eq 'HASH' ?
@@ -119,9 +118,13 @@ These are normally emitted by a L<Weather::OpenWeatherMap> instance.
 
 =head2 ATTRIBUTES
 
+=head3 hourly
+
+Boolean true if this is an hourly weather report.
+
 =head3 count
 
-The number of forecasts (days) as returned by the L<OpenWeatherMap
+The number of forecast days returned by the L<OpenWeatherMap
 API|http://www.openweathermap.org/api>.
 
 See L</list> and L</iter>.
@@ -156,8 +159,10 @@ See L</list>.
 
 =head3 list
 
-The full forecast list; each item in the list is a
-L<Weather::OpenWeatherMap::Result::Forecast::Day> instance:
+The full forecast list; each item in the list is either a
+L<Weather::OpenWeatherMap::Result::Forecast::Day> (by default) or a
+L<Weather::OpenWeatherMap::Result::Forecast::Hour> (if L</hourly> is true)
+instance:
 
   for my $day ($result->list) {
     my $date = $day->dt->mdy;
@@ -166,13 +171,15 @@ L<Weather::OpenWeatherMap::Result::Forecast::Day> instance:
   }
 
 See the documentation for
-L<Weather::OpenWeatherMap::Result::Forecast::Day>.
+L<Weather::OpenWeatherMap::Result::Forecast::Day> &
+L<Weather::OpenWeatherMap::Result::Forecast::Hour>.
 
 =head3 iter
 
 Returns an iterator that, when called, returns the next
-L<Weather::OpenWeatherMap::Result::Forecast::Day> instance (or undef
-when the list is empty):
+L<Weather::OpenWeatherMap::Result::Forecast::Day> or
+L<Weather::OpenWeatherMap::Result::Forecast::Hour> instance (or undef when the
+list is empty):
 
   my $iter = $result->iter;
   while (my $day = $iter->()) {
@@ -180,20 +187,15 @@ when the list is empty):
     # ...
   }
 
-See the documentation for
-L<Weather::OpenWeatherMap::Result::Forecast::Day>.
-
 See also: L</list>
 
 =head1 SEE ALSO
 
-L<http://www.openweathermap.org>
-
-L<Weather::OpenWeatherMap>
-
 L<Weather::OpenWeatherMap::Result>
 
 L<Weather::OpenWeatherMap::Result::Forecast::Day>
+
+L<Weather::OpenWeatherMap::Result::Forecast::Hour>
 
 L<Weather::OpenWeatherMap::Result::Current>
 
