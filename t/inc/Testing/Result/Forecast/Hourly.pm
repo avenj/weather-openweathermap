@@ -17,6 +17,11 @@ has second => (
   builder => sub { shift->result_obj->as_array->get(1) },
 );
 
+test 'storable' => sub {
+  my ($self) = @_;
+  can_ok $self->result_obj, 'freeze';
+};
+
 test 'identifiers' => sub {
   my ($self) = @_;
 
