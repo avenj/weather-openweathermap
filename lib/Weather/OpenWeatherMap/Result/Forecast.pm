@@ -28,7 +28,7 @@ use Moo;
 extends 'Weather::OpenWeatherMap::Result';
 
 has hourly => ( lazy_for Bool,
-  builder => sub { 0 },
+  builder => sub { shift->request->hourly ? 1 : 0 },
 );
 
 has id => ( lazy_for Int,
