@@ -174,7 +174,7 @@ test 'cache expiry' => sub {
   sleep 1;
   ok !$cache->retrieve($current), 'cache expiry on retrieve';
 
-  $cache->cache($current, $forecast);
+  cmp_ok $cache->cache($current, $forecast), '==', 2, '2 items cached';
   diag "Sleeping 1 second";
   sleep 1;
   cmp_ok $cache->expire, '==', 2, '2 items expired';

@@ -86,6 +86,7 @@ sub serialize {
 
 sub cache {
   my ($self, @results) = @_;
+  my $count = 0;
   for my $result (@results) {
     confess "Expected a Weather::OpenWeatherMap::Result but got $result"
       unless blessed($result) 
@@ -94,10 +95,10 @@ sub cache {
     my $request = $result->request;
     my $path   = $self->make_path($request);
     my $frozen = $self->serialize($result);
-    # FIXME consider flock ?
     $path->spew_raw($frozen);
+    ++$count;
   }
-  1
+  $count
 }
 
 sub is_cached {
@@ -241,6 +242,8 @@ C<1200>.
 
 Takes a list of L<Weather::OpenWeatherMap::Result> objects and caches to
 L</dir>.
+
+Returns the number of items cached.
 
 =head4 retrieve
 
