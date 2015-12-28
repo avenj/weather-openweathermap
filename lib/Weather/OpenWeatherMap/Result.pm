@@ -176,6 +176,12 @@ L<Weather::OpenWeatherMap::Result::Current>
 
 L<Weather::OpenWeatherMap::Result::Forecast>
 
+L<Weather::OpenWeatherMap::Result::Forecast::Block>
+
+L<Weather::OpenWeatherMap::Result::Forecast::Day>
+
+L<Weather::OpenWeatherMap::Result::Forecast::Hour>
+
 L<Weather::OpenWeatherMap::Result::Find>
 
 L<Weather::OpenWeatherMap::Request>

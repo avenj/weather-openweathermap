@@ -310,6 +310,8 @@ subclass; see L<Weather::OpenWeatherMap::Request>.
 
 =head1 SEE ALSO
 
+L<Weather::OpenWeatherMap::Result>
+
 L<POEx::Weather::OpenWeatherMap>
 
 =head1 AUTHOR

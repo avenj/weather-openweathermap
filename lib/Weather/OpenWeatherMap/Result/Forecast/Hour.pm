@@ -159,7 +159,8 @@ there for other applicable methods and attributes.
 
 =head3 dt_txt
 
-A textual representation of the date/time for this forecast block.
+A textual representation of the date/time (UTC) for this forecast block, as
+provided by the OpenWeatherMap service.
 
 See also: L<Weather::OpenWeatherMap::Result::Forecast::Block/dt>
 

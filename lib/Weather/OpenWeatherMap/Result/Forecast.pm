@@ -193,6 +193,8 @@ See also: L</list>
 
 L<Weather::OpenWeatherMap::Result>
 
+L<Weather::OpenWeatherMap::Result::Forecast::Block>
+
 L<Weather::OpenWeatherMap::Result::Forecast::Day>
 
 L<Weather::OpenWeatherMap::Result::Forecast::Hour>

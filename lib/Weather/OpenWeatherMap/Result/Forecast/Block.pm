@@ -122,7 +122,8 @@ The L<OpenWeatherMap|http://www.openweathermap.org/> conditions icon.
 
   my $date = $result->dt->mdy;
 
-A L<DateTime> object coerced from the timestamp attached to this forecast.
+A L<DateTime> object coerced from the timestamp (in UTC) attached to this
+forecast.
 
 =head3 humidity
 
@@ -134,20 +135,20 @@ The forecast atmospheric pressure in hPa.
 
 =head3 wind_speed_mph
 
-The forecast wind speed, in MPH.
+The forecast wind speed in MPH.
 
 =head3 wind_speed_kph
 
-The forecast wind speed, in KPH.
+The forecast wind speed in KPH.
 
 =head3 wind_direction
 
-The forecast wind direction, as a (inter-)cardinal direction in the set
+The forecast wind direction as a (inter-)cardinal direction in the set
 C<< [ N NNE NE ENE E ESE SE SSE S SSW SW WSW W WNW NW NNW ] >>
 
 =head3 wind_direction_degrees
 
-The forecast wind direction, in degrees azimuth.
+The forecast wind direction in degrees azimuth.
 
 =head1 SEE ALSO
 
