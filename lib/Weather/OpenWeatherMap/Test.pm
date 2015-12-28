@@ -22,41 +22,19 @@ our @EXPORT = our @EXPORT_OK = qw/
 
 sub get_test_data {
   my $type = lc (shift || return);
-
   my $base = 'Weather-OpenWeatherMap';
-  my $path;
-  DTYPE: {
-    if ($type eq 'current') {
-      $path = dist_file($base, 'current.json');
-      last DTYPE
-    }
-
-    if ($type =~ /^3day/ || $type eq 'forecast') {
-      $path = dist_file($base, '3day.json');
-      last DTYPE
-    }
-
-    if ($type eq 'hourly') {
-      $path = dist_file($base, 'hourly.json');
-      last DTYPE
-    }
-
-    if ($type eq 'failure' || $type eq 'error') {
-      $path = dist_file($base, 'failure.json');
-      last DTYPE
-    }
-
-    if ($type eq 'find' || $type eq 'search') {
-      $path = dist_file($base, 'find.json');
-      last DTYPE
-    }
-  }
-
-  if ($path) {
-    return path($path)->slurp_utf8
-  }
-
-  confess "Unknown type $type"
+  my $path = dist_file( $base,
+      $type eq 'current'  ? 'current.json'
+    : $type =~ /^3day/    ? '3day.json'
+    : $type eq 'forecast' ? '3day.json'
+    : $type eq 'hourly'   ? 'hourly.json'
+    : $type eq 'failure'  ? 'failure.json'
+    : $type eq 'error'    ? 'failure.json'
+    : $type eq 'find'     ? 'find.json'
+    : $type eq 'search'   ? 'find.json'
+    : confess "Unknown type $type"
+  );
+  path($path)->slurp_utf8
 }
 
 { package
