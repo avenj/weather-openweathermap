@@ -13,7 +13,12 @@ use Weather::OpenWeatherMap::Cache;
   has [qw/request_obj result_obj mock_json/] => ( is => 'ro' );
   with 'Testing::Result::Forecast::Daily';
 }
-# FIXME hourly forecast test from here also
+
+{ package Testing::Result::Cachable::Hourly;
+  use Test::Roo;
+  has [qw/request_obj result_obj mock_json/] => ( is => 'ro' );
+  with 'Testing::Result::Forecast::Hourly';
+}
 
 { package Testing::Result::Cachable::Find;
   use Test::Roo;
@@ -44,15 +49,21 @@ test 'cache bare result' => sub {
 
   my $forecast = $self->forecast_result_generator->();
   isa_ok $forecast, 'Weather::OpenWeatherMap::Result::Forecast';
+  ok !$forecast->hourly, 'daily forecast !hourly';
+
+  my $hourly = $self->hourly_result_generator->();
+  isa_ok $forecast, 'Weather::OpenWeatherMap::Result::Forecast';
+  ok $hourly->hourly, 'hourly forecast marked as such';
 
   my $find = $self->find_result_generator->();
   isa_ok $find, 'Weather::OpenWeatherMap::Result::Find';
 
   $cache->cache($current);
-  $cache->cache($forecast, $find);
+  $cache->cache($forecast, $find, $hourly);
 
   my $cached_current  = $cache->retrieve($current->request);
   my $cached_forecast = $cache->retrieve($forecast->request);
+  my $cached_hourly   = $cache->retrieve($hourly->request);
   my $cached_find     = $cache->retrieve($find->request);
 
   Testing::Result::Cachable::Current->run_tests( +{
@@ -64,6 +75,11 @@ test 'cache bare result' => sub {
       result_obj  => $cached_forecast->object,
       request_obj => $cached_forecast->object->request,
       mock_json   => $cached_forecast->object->json,
+  } );
+  Testing::Result::Cachable::Hourly->run_tests( +{
+      result_obj  => $cached_hourly->object,
+      request_obj => $cached_hourly->object->request,
+      mock_json   => $cached_hourly->object->json,
   } );
   Testing::Result::Cachable::Find->run_tests( +{
       result_obj  => $cached_find->object,
@@ -81,6 +97,11 @@ test 'cache populated result' => sub {
 
   my $forecast = $self->forecast_result_generator->();
   isa_ok $forecast, 'Weather::OpenWeatherMap::Result::Forecast';
+  ok !$forecast->hourly, 'daily forecast !hourly';
+
+  my $hourly = $self->hourly_result_generator->();
+  isa_ok $hourly, 'Weather::OpenWeatherMap::Result::Forecast';
+  ok $hourly->hourly, 'hourly forecast marked as such';
 
   my $find = $self->find_result_generator->();
   isa_ok $find, 'Weather::OpenWeatherMap::Result::Find';
@@ -96,16 +117,22 @@ test 'cache populated result' => sub {
     request_obj => $forecast->request,
     mock_json   => $forecast->json,
   } );
+  Testing::Result::Cachable::Hourly->run_tests( +{
+    result_obj  => $hourly,
+    request_obj => $hourly->request,
+    mock_json   => $hourly->json,
+  } );
   Testing::Result::Cachable::Find->run_tests( +{
     result_obj  => $find,
     request_obj => $find->request,
     mock_json   => $find->json,
   } );
 
-  $cache->cache($current, $forecast, $find);
+  $cache->cache($current, $forecast, $hourly, $find);
 
   my $cached_current  = $cache->retrieve($current->request);
   my $cached_forecast = $cache->retrieve($forecast->request);
+  my $cached_hourly   = $cache->retrieve($hourly->request);
   my $cached_find     = $cache->retrieve($find->request);
 
   Testing::Result::Cachable::Current->run_tests( +{
@@ -117,6 +144,11 @@ test 'cache populated result' => sub {
       result_obj  => $cached_forecast->object,
       request_obj => $cached_forecast->object->request,
       mock_json   => $cached_forecast->object->json,
+  } );
+  Testing::Result::Cachable::Hourly->run_tests( +{
+      result_obj  => $cached_hourly->object,
+      request_obj => $cached_hourly->object->request,
+      mock_json   => $cached_hourly->object->json,
   } );
   Testing::Result::Cachable::Find->run_tests( +{
       result_obj  => $cached_find->object,

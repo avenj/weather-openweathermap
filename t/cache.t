@@ -45,6 +45,26 @@ has forecast_result_generator => (
   },
 );
 
+has hourly_result_generator => (
+  is      => 'ro',
+  builder => sub {
+    sub {
+      my $req = Weather::OpenWeatherMap::Request->new_for(
+        Forecast =>
+          api_key  => 'abcd',
+          tag      => 'foo',
+          location => 'Moscow, RU',
+          hourly   => 1,
+      );
+      Weather::OpenWeatherMap::Result->new_for(
+        Forecast =>
+          request => $req,
+          json    => get_test_data('hourly'),
+      )
+    }
+  },
+);
+
 has find_result_generator => (
   is      => 'ro',
   builder => sub {
