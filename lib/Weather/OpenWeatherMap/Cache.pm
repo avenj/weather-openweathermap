@@ -50,7 +50,7 @@ sub make_path {
     unless blessed($obj) and $obj->isa('Weather::OpenWeatherMap::Request');
 
   my $fname = 'W';
-  # also see cache_paths
+  # also see cache_paths; new cache prefixes need added there also
   TYPE: {
     if ($obj->isa('Weather::OpenWeatherMap::Request::Current')) {
       $fname .= 'C';
