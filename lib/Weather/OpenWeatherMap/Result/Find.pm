@@ -58,7 +58,7 @@ sub iter     { shift->_list->natatime(1) }
 
 =head1 NAME
 
-Weather::OpenWeatherMap::Result::Find
+Weather::OpenWeatherMap::Result::Find - Location search result
 
 =head1 SYNOPSIS
 
@@ -69,7 +69,8 @@ Weather::OpenWeatherMap::Result::Find
 This is a subclass of L<Weather::OpenWeatherMap::Result> containing the result
 of a completed L<Weather::OpenWeatherMap::Request::Find>.
 
-These are normally emitted by a L<Weather::OpenWeatherMap> instance.
+These are normally returned by a L<Weather::OpenWeatherMap> instance (or
+emitted by L<POEx::Weather::OpenWeatherMap>.
 
 =head2 ATTRIBUTES
 

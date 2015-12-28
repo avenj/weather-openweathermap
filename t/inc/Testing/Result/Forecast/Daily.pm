@@ -43,8 +43,8 @@ test 'forecast list' => sub {
   cmp_ok $self->result_obj->as_array->count, '==', 3,
     'as_array';
 
-  my $iter = $self->result_obj->iter;
-  my ($first, $second, $third) = map $iter->(), 1 .. 3;
+  my $iter = $self->result_obj->iter(3);
+  my ($first, $second, $third) = $iter->();
   is_deeply 
     [ $first, $second, $third ], 
     [ @list ],

@@ -92,8 +92,8 @@ sub list {
 }
 
 sub iter {
-  my ($self) = @_;
-  $self->_forecast_list->natatime(1)
+  my ($self, $count) = @_;
+  $self->_forecast_list->natatime($count || 1)
 }
 
 
@@ -186,6 +186,10 @@ list is empty):
     my $wind = $day->wind_speed_mph;
     # ...
   }
+
+The number of items to return at a time can be provided (as of C<v0.4.x>):
+
+  my $iter = $result->iter(3);
 
 See also: L</list>
 
