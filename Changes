@@ -1,5 +1,11 @@
 Revision history for Perl module Weather-OpenWeatherMap
 
+0.003001 2015-12-28
+
+  - Add hourly (3-hr blocks) forecast support
+
+  - Documentation fixes
+
 0.002004 2015-09-18
 
   - use strictures 2 for saner fatal warnings behavior

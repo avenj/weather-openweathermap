@@ -166,6 +166,8 @@ subclass; see [Weather::OpenWeatherMap::Request](https://metacpan.org/pod/Weathe
 
 # SEE ALSO
 
+[Weather::OpenWeatherMap::Result](https://metacpan.org/pod/Weather::OpenWeatherMap::Result)
+
 [POEx::Weather::OpenWeatherMap](https://metacpan.org/pod/POEx::Weather::OpenWeatherMap)
 
 # AUTHOR
