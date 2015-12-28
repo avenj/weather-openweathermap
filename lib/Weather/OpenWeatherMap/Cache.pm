@@ -94,6 +94,7 @@ sub cache {
     my $request = $result->request;
     my $path   = $self->make_path($request);
     my $frozen = $self->serialize($result);
+    # FIXME consider flock ?
     $path->spew_raw($frozen);
   }
   1
@@ -114,11 +115,28 @@ sub deserialize {
 
 sub retrieve {
   my ($self, $obj) = @_;
+
   my $path = $self->is_cached($obj);
   return unless $path;
+
   my $data = $path->slurp_raw;
-  my $ref = $self->deserialize($data);
+  my $ref =
+    try { $self->deserialize($data) }
+    catch {
+      warn "deserialize died on retrieve: $_\n";
+      warn "Attempting to remove possibly corrupt cachefile: $path";
+      $path->remove;
+      undef
+    };
+  return unless $ref;
+
   my ($ts, $result) = @$ref;
+  unless (defined $ts && defined $result) {
+    warn "cachefile incomplete, removing: $path";
+    $path->remove;
+    return
+  }
+
   hash(
     cached_at => $ts,
     object    => $result
@@ -135,9 +153,12 @@ sub expire {
   my $ref = 
     try { $self->deserialize($data) }
     catch {
+      warn "deserialize died on expiry check: $_\n";
       warn "Attempting to remove possibly corrupt cachefile: $path";
-      $path->remove
+      $path->remove;
+      undef
     };
+  return unless $ref;
 
   my ($ts) = @$ref;
   return $path->remove if Time::HiRes::time - $ts > $self->expiry;
