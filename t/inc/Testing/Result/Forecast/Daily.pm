@@ -43,6 +43,7 @@ test 'forecast list' => sub {
   cmp_ok $self->result_obj->as_array->count, '==', 3,
     'as_array';
 
+  # Also tests ->iter($n), ::Hourly tests default:
   my $iter = $self->result_obj->iter(3);
   my ($first, $second, $third) = $iter->();
   is_deeply 

@@ -46,6 +46,7 @@ test 'forecast list' => sub {
   cmp_ok $self->result_obj->as_array->count, '==', 40,
     'as_array';
 
+  # Also tests default ->iter(), ::Daily tests ->iter($n):
   my $iter = $self->result_obj->iter;
   my ($first, $second, $third) = map $iter->(), 1 .. 3;
   is_deeply
