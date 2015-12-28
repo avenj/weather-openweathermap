@@ -46,8 +46,7 @@ sub get_test_data {
   sub request {
     my ($self, $http_request) = @_;
     my $url = $http_request->uri;
-    $self->{'__requested'} ? 
-      ++$self->{'__requested'} : ($self->{'__requested'} = 1);
+    $self->{'__requested'}++;
     if ($url =~ /forecast/) {
       return $url =~ /daily/ ?
         HTTP::Response->new( 200 => undef => [] => $self->{forecast_json} )
