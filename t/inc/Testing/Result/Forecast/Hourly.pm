@@ -86,6 +86,8 @@ test 'conditions' => sub {
 
   cmp_ok $self->first->temp, '==', 33,
     'temp';
+  cmp_ok $self->first->temp_c, '==', 0,
+    'temp_c';
 
   cmp_ok $self->first->conditions_terse, 'eq', 'Snow',
     'conditions_terse';
