@@ -21,7 +21,7 @@ our @EXPORT = our @EXPORT_OK = qw/
 
 
 sub get_test_data {
-  my $type = lc (shift || return);
+  my $type = lc shift || confess "No type specified";
   my $base = 'Weather-OpenWeatherMap';
   my $path = dist_file( $base,
       $type eq 'current'  ? 'current.json'
