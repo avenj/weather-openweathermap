@@ -15,6 +15,7 @@ package Testing::OpenWeatherMap;
   has [qw/request_obj result_obj mock_json/] => ( is => 'ro' );
   with 'Testing::Result::Forecast::Hourly';
 }
+# FIXME test Find results from here also
 
 use Weather::OpenWeatherMap;
 use Weather::OpenWeatherMap::Test;
