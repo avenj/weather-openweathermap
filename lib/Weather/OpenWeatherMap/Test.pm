@@ -70,19 +70,19 @@ sub get_test_data {
     my $url = $http_request->uri;
     $self->{'__requested'} ? 
       ++$self->{'__requested'} : ($self->{'__requested'} = 1);
-    return $url =~ /forecast/ ?
-      HTTP::Response->new(
-        200 => undef => [] => $self->{forecast_json},
-      )
-      : HTTP::Response->new(
-        200 => undef => [] => $self->{current_json},
-      )
+    if ($url =~ /forecast/) {
+      return $url =~ /daily/ ?
+        HTTP::Response->new( 200 => undef => [] => $self->{forecast_json} )
+        : HTTP::Response->new( 200 => undef => [] => $self->{hourly_json} )
+    }
+    HTTP::Response->new( 200 => undef => [] => $self->{current_json} )
   }
 }
 
 sub mock_http_ua {
   return bless +{
     forecast_json => get_test_data('forecast'),
+    hourly_json   => get_test_data('hourly'),
     current_json  => get_test_data('current'),
   }, 'Weather::OpenWeatherMap::Test::MockUA'
 }

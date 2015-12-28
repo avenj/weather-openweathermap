@@ -10,7 +10,11 @@ package Testing::OpenWeatherMap;
   has [qw/request_obj result_obj mock_json/] => ( is => 'ro' );
   with 'Testing::Result::Forecast::Daily';
 }
-# FIXME hourly forecast from here also
+{ package Testing::OWM::Forecast::Hourly;
+  use Test::Roo;
+  has [qw/request_obj result_obj mock_json/] => ( is => 'ro' );
+  with 'Testing::Result::Forecast::Hourly';
+}
 
 use Weather::OpenWeatherMap;
 use Weather::OpenWeatherMap::Test;
@@ -54,6 +58,17 @@ test 'retrieve forecast' => sub {
     result_obj  => $result,
     request_obj => $result->request,
     mock_json   => $result->json,
+  } );
+
+  my $hourly = $self->wx->get_weather(
+    location => 'Moscow, Russia',
+    forecast => 1,
+    hourly   => 1,
+  );
+  Testing::OWM::Forecast::Hourly->run_tests( +{
+    result_obj  => $hourly,
+    request_obj => $hourly->request,
+    mock_json   => $hourly->json,
   } );
 };
 
