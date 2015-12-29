@@ -28,7 +28,6 @@ sub deg_to_compass {
   $compass->[ $val % 16 ]
 }
 
-# FIXME this needs to move to a proper typelib ->
 my $CoercedInt = Int->plus_coercions(StrictNum, sub { int });
 sub CoercedInt { $CoercedInt }
 
