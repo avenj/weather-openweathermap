@@ -115,6 +115,8 @@ sub is_cached {
 
 sub retrieve {
   my ($self, $request) = @_;
+  # make_path (via is_cached) will handle Result objs transparently also, but
+  # we need a Request so we can reattach it to returned Result later:
   $request = $request->request
     if $request->isa('Weather::OpenWeatherMap::Result');
   my $path = $self->is_cached($request);
