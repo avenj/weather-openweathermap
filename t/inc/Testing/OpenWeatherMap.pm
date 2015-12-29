@@ -1,5 +1,6 @@
 package Testing::OpenWeatherMap;
 
+
 { package Testing::OWM::Current;
   use Test::Roo;
   has [qw/request_obj result_obj mock_json/] => ( is => 'ro' );
@@ -15,14 +16,18 @@ package Testing::OpenWeatherMap;
   has [qw/request_obj result_obj mock_json/] => ( is => 'ro' );
   with 'Testing::Result::Forecast::Hourly';
 }
-# FIXME test Find results from here also
+{ package Testing::OWM::Find;
+  use Test::Roo;
+  has [qw/request_obj result_obj mock_json/] => ( is => 'ro' );
+  with 'Testing::Result::Find';
+}
+
 
 use Weather::OpenWeatherMap;
 use Weather::OpenWeatherMap::Test;
 
 
 use Test::Roo::Role;
-
 
 has wx => (
   lazy    => 1,
@@ -57,7 +62,7 @@ test 'retrieve current' => sub {
   } );
 };
 
-test 'retrieve forecast' => sub {
+test 'retrieve forecasts' => sub {
   my ($self) = @_;
   my $result = $self->wx->get_weather(
     location => 'Manchester, NH',
@@ -79,6 +84,19 @@ test 'retrieve forecast' => sub {
     result_obj  => $hourly,
     request_obj => $hourly->request,
     mock_json   => $hourly->json,
+  } );
+};
+
+test 'retrieve find' => sub {
+  my ($self) = @_;
+  my $result = $self->wx->get_weather(
+    location => 'London, UK',
+    find     => 1,
+  );
+  Testing::OWM::Find->run_tests( +{
+    result_obj  => $result,
+    request_obj => $result->request,
+    mock_json   => $result->json,
   } );
 };
 

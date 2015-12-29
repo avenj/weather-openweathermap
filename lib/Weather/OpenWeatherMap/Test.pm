@@ -51,6 +51,8 @@ sub get_test_data {
       return $url =~ /daily/ ?
         HTTP::Response->new( 200 => undef => [] => $self->{forecast_json} )
         : HTTP::Response->new( 200 => undef => [] => $self->{hourly_json} )
+    } elsif ($url =~ /find/) {
+      return HTTP::Response->new( 200 => undef => [] => $self->{find_json} )
     }
     HTTP::Response->new( 200 => undef => [] => $self->{current_json} )
   }
@@ -61,6 +63,7 @@ sub mock_http_ua {
     forecast_json => get_test_data('forecast'),
     hourly_json   => get_test_data('hourly'),
     current_json  => get_test_data('current'),
+    find_json     => get_test_data('find'),
   }, 'Weather::OpenWeatherMap::Test::MockUA'
 }
 
