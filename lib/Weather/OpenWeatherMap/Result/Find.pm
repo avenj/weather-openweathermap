@@ -144,6 +144,10 @@ is empty):
     # ...
   }
 
+The number of items to return at a time can be specified:
+
+  my $iter = $result->iter(3);
+
 =head3 search_type
 
 An alias for L</message>.
