@@ -106,16 +106,17 @@ sub cache {
 }
 
 sub is_cached {
-  my ($self, $request) = @_;
-  my $path = $self->make_path($request);
+  my ($self, $obj) = @_;
+  my $path = $self->make_path($obj);
   return unless $path->exists;
-  return if $self->expire($request);
+  return if $self->expire($obj);
   $path
 }
 
 sub retrieve {
   my ($self, $request) = @_;
-
+  $request = $request->request
+    if $request->isa('Weather::OpenWeatherMap::Result');
   my $path = $self->is_cached($request);
   return unless $path;
 
