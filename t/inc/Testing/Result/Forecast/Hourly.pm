@@ -107,11 +107,11 @@ test 'conditions' => sub {
 
 test 'precipitation' => sub {
   my ($self) = @_;
-  cmp_ok $self->first->snow, 'eq', '2.08',
+  cmp_ok $self->first->snow, 'eq', '2.1',
     'snow ok';
   cmp_ok $self->first->rain, '==', 0,
     'rain (default) ok';
-  cmp_ok $self->second->rain, 'eq', '0.06',
+  cmp_ok $self->second->rain, 'eq', '0.1',
     'rain (non-default) ok';
 };
 

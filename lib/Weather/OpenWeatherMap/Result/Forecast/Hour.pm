@@ -118,7 +118,7 @@ has _snow => (
   builder     => sub { +{ '3h' => 0 } },
 );
 
-sub snow { 0 + sprintf '%.2f', shift->_snow->{'3h'} // 0 }
+sub snow { 0 + sprintf '%.1f', shift->_snow->{'3h'} // 0 }
 
 has _rain => (
   init_arg    => 'rain',
@@ -129,7 +129,7 @@ has _rain => (
   builder     => sub { +{ '3h' => 0 } },
 );
 
-sub rain { 0 + sprintf '%.2f', shift->_rain->{'3h'} // 0 }
+sub rain { 0 + sprintf '%.1f', shift->_rain->{'3h'} // 0 }
 
 
 with 'Weather::OpenWeatherMap::Result::Forecast::Block';
