@@ -39,6 +39,18 @@ has expiry => (
 
 ## FIXME max_entries ? or a size limit ?
 
+sub serialize {
+  my ($self, $obj) = @_;
+  Storable::freeze(
+    [ Time::HiRes::time, $obj ]
+  )
+}
+
+sub deserialize {
+  my ($self, $data) = @_;
+  Storable::thaw($data)
+}
+
 sub make_path {
   my ($self, $obj) = @_;
 
@@ -76,14 +88,6 @@ sub make_path {
   path( join '/', $self->dir->absolute, $fname )
 }
 
-
-sub serialize {
-  my ($self, $obj) = @_;
-  Storable::freeze(
-    [ Time::HiRes::time, $obj ]
-  )
-}
-
 sub cache {
   my ($self, @results) = @_;
   my $count = 0;
@@ -107,11 +111,6 @@ sub is_cached {
   return unless $path->exists;
   return if $self->expire($request);
   $path
-}
-
-sub deserialize {
-  my ($self, $data) = @_;
-  Storable::thaw($data)
 }
 
 sub retrieve {
