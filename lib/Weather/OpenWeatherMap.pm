@@ -34,7 +34,10 @@ has api_key => (
   is        => 'ro',
   isa       => Str,
   predicate => 1,
-  builder   => sub { '' },
+  builder   => sub {
+    carp "No api_key specified, requests will likely fail!";
+    '' 
+  },
 );
 
 has cache => (
