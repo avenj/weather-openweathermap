@@ -36,6 +36,15 @@ has wx => (
   },
 );
 
+test 'api_key' => sub {
+  my ($self) = @_;
+  cmp_ok $self->wx->api_key, 'eq', 'foo',
+    'api_key';
+  $self->wx->set_api_key('bar');
+  cmp_ok $self->wx->api_key, 'eq', 'bar',
+    'set_api_key';
+};
+
 test 'retrieve current' => sub {
   my ($self) = @_;
   my $result = $self->wx->get_weather(

@@ -34,6 +34,7 @@ has api_key => (
   is        => 'ro',
   isa       => Str,
   predicate => 1,
+  writer    => 'set_api_key',
   builder   => sub {
     carp "No api_key specified, requests will likely fail!";
     '' 
@@ -228,6 +229,9 @@ the L<POE> ecosystem.
 Your L<OpenWeatherMap|http://www.openweathermap.org/> API key.
 
 (See L<http://www.openweathermap.org/api> to register for free.)
+
+C<api_key> can be set after object construction via B<set_api_key>; if the key
+is invalid, requests will likely fail with C<< 401 Unauthorized >> errors.
 
 =head3 cache
 
