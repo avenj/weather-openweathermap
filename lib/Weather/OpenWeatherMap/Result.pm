@@ -35,6 +35,7 @@ sub encode_json {
 has request => (
   required  => 1,
   is        => 'ro',
+  writer    => 'set_request',
   isa       => InstanceOf['Weather::OpenWeatherMap::Request'],
 );
 

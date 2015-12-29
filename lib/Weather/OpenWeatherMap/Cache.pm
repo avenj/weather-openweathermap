@@ -102,10 +102,10 @@ sub cache {
 }
 
 sub is_cached {
-  my ($self, $obj) = @_;
-  my $path = $self->make_path($obj);
+  my ($self, $request) = @_;
+  my $path = $self->make_path($request);
   return unless $path->exists;
-  return if $self->expire($obj);
+  return if $self->expire($request);
   $path
 }
 
@@ -115,9 +115,9 @@ sub deserialize {
 }
 
 sub retrieve {
-  my ($self, $obj) = @_;
+  my ($self, $request) = @_;
 
-  my $path = $self->is_cached($obj);
+  my $path = $self->is_cached($request);
   return unless $path;
 
   my $data = $path->slurp_raw;
@@ -137,6 +137,10 @@ sub retrieve {
     $path->remove;
     return
   }
+
+  # cached Request obj attached to Result may be stale
+  # (e.g. tag may be different for new Request/Result pair)
+  $result->set_request($request);
 
   hash(
     cached_at => $ts,
