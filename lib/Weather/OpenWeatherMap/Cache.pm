@@ -139,6 +139,7 @@ sub retrieve {
 
   # cached Request obj attached to Result may be stale
   # (e.g. tag may be different for new Request/Result pair)
+  # FIXME tests for this are lacking
   $result->set_request($request);
 
   hash(
@@ -255,7 +256,7 @@ Returns the number of items cached.
 =head4 retrieve
 
 Takes a L<Weather::OpenWeatherMap::Request> and attempts to retrieve a
-(non-expired) cached result.
+(non-expired) cached L<Weather::OpenWeatherMap::Result>.
 
 Returns false if no item was found.
 
