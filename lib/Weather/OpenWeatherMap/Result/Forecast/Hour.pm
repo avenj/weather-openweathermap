@@ -174,11 +174,11 @@ The predicted temperature (in Celsius).
 
 =head3 snow
 
-The predicted amount of snow (in inches), if applicable.
+The predicted amount of snow (in mm), if applicable.
 
 =head3 rain
 
-The predicted amount of rain (in inches), if applicable.
+The predicted amount of rain (in mm), if applicable.
 
 =head1 SEE ALSO
 
