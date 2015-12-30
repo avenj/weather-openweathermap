@@ -30,7 +30,6 @@ use Moo;
 =cut
 
 has api_key => (
-  lazy      => 1,
   is        => 'ro',
   isa       => Str,
   predicate => 1,
