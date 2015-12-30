@@ -4,8 +4,9 @@ use Test::Roo::Role;
 
 use Scalar::Util 'blessed';
 
+use Devel::Cycle 'find_cycle';
+
 use Weather::OpenWeatherMap::Test;
-use Test::Memory::Cycle;
 use Test::File::ShareDir -share => {
   -dist => { 'Weather-OpenWeatherMap' => 'share' },
 };
@@ -96,7 +97,14 @@ test 'request objects match' => sub {
 
 test 'no memory cycles' => sub {
   my ($self) = @_;
-  memory_cycle_ok $self->result_obj
+  my $found = 0;
+  find_cycle( $self->result_obj,
+    sub { 
+      ++$found;
+      diag explain @_
+    }
+  ); 
+  ok !$found, 'no memory cycles found';
 };
 
 1;
