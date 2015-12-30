@@ -1,5 +1,20 @@
 Revision history for Perl module Weather-OpenWeatherMap
 
+0.005002 2015-12-30
+
+  - Fix documentation regarding rain/snow totals
+
+  - carp() about it if constructed without an api_key
+
+  - Add set_api_key writer for changing API key on an instance
+
+  - Fix a bug related to reattaching Request objects to cached Results when
+    calling ->retrieve on a Result object (rather than Request)
+
+    (This is a dubious thing to do anyway, but Cache allows it)
+
+  - Test expansion
+
 0.005001 2015-12-29
 
   - Fix for potentially stale Request objects attached to cached Results

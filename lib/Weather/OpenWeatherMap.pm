@@ -121,10 +121,6 @@ sub get_weather {
       $type =>
         request => $my_request,
         json    => $http_response->content,
-        (
-          $my_request->can('hourly') && $my_request->hourly ?
-            (hourly => 1) : ()
-        ),
     );
   }
 
