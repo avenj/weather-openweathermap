@@ -61,7 +61,6 @@ has ts => (
 
 has url => (
   init_arg  => undef,
-  lazy      => 1,
   is        => 'ro',
   isa       => Str,
   builder   => sub { shift->_parse_location_str },
