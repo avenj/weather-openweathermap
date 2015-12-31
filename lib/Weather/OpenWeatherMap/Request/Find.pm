@@ -4,6 +4,8 @@ use Carp;
 use URI::Escape 'uri_escape_utf8';
 use Types::Standard -all;
 
+use Weather::OpenWeatherMap::Error;
+
 use Moo;
 extends 'Weather::OpenWeatherMap::Request';
 
@@ -23,8 +25,12 @@ has type => (
 
 
 sub _url_bycode {
-  carp "Find does not support city codes";
-  return 'http://api.openweathermap.org/data/2.5/find'
+  my ($self) = @_;
+  die Weather::OpenWeatherMap::Error->new(
+    request => $self,
+    source  => 'internal',
+    status  => 'Find requests do not support city codes',
+  )
 }
 
 sub _url_bycoord {
