@@ -9,6 +9,9 @@ use Weather::OpenWeatherMap::Error;
 use Moo;
 extends 'Weather::OpenWeatherMap::Request';
 
+# FIXME um, is any of this still correct?
+#  ... OWM docs do not say much anymore ...
+
 has max => (
   lazy      => 1,
   is        => 'ro',
@@ -86,6 +89,8 @@ The type of search to perform; C<accurate> looks for exact matches, C<like>
 searches by substring.
 
 =head1 SEE ALSO
+
+L<http://www.openweathermap.org/current>
 
 L<Weather::OpenWeatherMap::Result::Find>
 
