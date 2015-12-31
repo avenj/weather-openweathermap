@@ -10,6 +10,7 @@ has error_obj => (
   builder => sub {
     my $req = Weather::OpenWeatherMap::Request->new_for(
       Current => 
+        api_key   => 'abcd',
         location  => 'foo', 
         tag       => 'bar'
     );
