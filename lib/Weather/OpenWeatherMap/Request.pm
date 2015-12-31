@@ -31,11 +31,13 @@ sub new_for {
 =cut
 
 has api_key => (
-  lazy      => 1,
   is        => 'ro',
   isa       => Str,
   predicate => 1,
-  builder   => sub { '' },
+  builder   => sub {
+    carp "No 'api_key' specified";
+    ''
+  },
 );
 
 
