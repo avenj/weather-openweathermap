@@ -81,7 +81,6 @@ has http_request => (
 
 
 has _units => (
-  required => 1,
   is       => 'ro',
   isa      => Str,
   builder  => sub { 'imperial' },
