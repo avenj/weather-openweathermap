@@ -83,7 +83,7 @@ sub make_path {
   my $digest = $^O eq 'Win32' ? 
       substr sha1_hex($location), 0, 25 
     : sha1_hex($location);
-  # If you happen to alter the extension, check ->clear() too:
+  # If you happen to alter the extension, check ->cache_paths() too:
   $fname .= $digest . '.wx';
   path( join '/', $self->dir->absolute, $fname )
 }
