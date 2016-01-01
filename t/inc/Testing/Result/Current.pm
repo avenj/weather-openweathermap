@@ -39,6 +39,8 @@ test 'temperatures' => sub {
   # temp_f, temp_c
   cmp_ok $self->result_obj->temp_f, '==', 41,
     'temp_f';
+  cmp_ok $self->result_obj->temp, '==', $self->result_obj->temp_f,
+    'temp aliased to temp_f';
   cmp_ok $self->result_obj->temp_c, '==', 5,
     'temp_c';
 };

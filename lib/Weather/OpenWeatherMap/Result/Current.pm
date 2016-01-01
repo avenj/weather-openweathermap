@@ -67,6 +67,7 @@ has longitude => ( lazy_for StrictNum,
 has temp_f => ( lazy_for Int,
   builder   => sub { int( shift->data->{main}->{temp} ) },
 );
+sub temp { shift->temp_f }
 
 has temp_c => ( lazy_for Int,
   builder   => sub { int f_to_c( shift->temp_f ) },

@@ -90,8 +90,10 @@ test 'atmospheric' => sub {
 test 'conditions' => sub {
   my ($self) = @_;
 
-  cmp_ok $self->first->temp, '==', 33,
-    'temp';
+  cmp_ok $self->first->temp_f, '==', 33,
+    'temp_f';
+  cmp_ok $self->first->temp, '==', $self->first->temp_f,
+    'temp aliased to temp_f';
   cmp_ok $self->first->temp_c, '==', 0,
     'temp_c';
 

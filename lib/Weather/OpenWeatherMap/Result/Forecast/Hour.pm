@@ -33,6 +33,7 @@ has temp => (
   coerce    => 1,
   builder   => sub { shift->_main->{temp} },
 );
+sub temp_f { shift->temp }
 
 has temp_c => (
   lazy      => 1,
@@ -164,7 +165,7 @@ provided by the OpenWeatherMap service.
 
 See also: L<Weather::OpenWeatherMap::Result::Forecast::Block/dt>
 
-=head3 temp
+=head3 temp_f
 
 The predicted temperature (in Fahrenheit).
 
