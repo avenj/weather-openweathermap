@@ -26,14 +26,14 @@ has _main => (
   coerce      => 1,
 );
 
-has temp => (
+has temp_f => (
   lazy      => 1,
   is        => 'ro',
   isa       => CoercedInt,
   coerce    => 1,
   builder   => sub { shift->_main->{temp} },
 );
-sub temp_f { shift->temp }
+sub temp { shift->temp_f }
 
 has temp_c => (
   lazy      => 1,
