@@ -60,10 +60,12 @@ sub get_test_data {
 
 sub mock_http_ua {
   return bless +{
-    forecast_json => get_test_data('forecast'),
-    hourly_json   => get_test_data('hourly'),
-    current_json  => get_test_data('current'),
-    find_json     => get_test_data('find'),
+    map {; ($_ . '_json' => get_test_data($_) ) } qw/
+      forecast
+      hourly
+      current
+      find
+    /
   }, 'Weather::OpenWeatherMap::Test::MockUA'
 }
 
