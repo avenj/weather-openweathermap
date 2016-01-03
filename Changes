@@ -1,5 +1,17 @@
 Revision history for Perl module Weather-OpenWeatherMap
 
+0.005004 2016-01-03
+
+  - Fix lack of consistency regarding 'temp/temp_f' accessors between Current
+    and Hourly reports
+
+  - confess() if attempting to construct a Request::Find for a city code
+
+  - Force Request->url related exceptions to take place at object construction
+    time
+
+  - Drop Test::Memory::Cycle dependency
+
 0.005003 2015-12-30
 
   - Missing dependency on strictures-2+
